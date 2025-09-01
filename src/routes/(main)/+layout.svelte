@@ -5,7 +5,7 @@
 	import modeobserver from '$lib/utils/modeobserver';
 	import { BProgress } from '@bprogress/core';
 	import { afterNavigate, beforeNavigate } from '$app/navigation';
-	import Navbar from '$lib/ui/components/navbar.svelte';
+	import Navbar from '$lib/ui/components/Navbar.svelte';
 
 	let { children } = $props();
 
