@@ -2,7 +2,6 @@
 	import { page } from '$app/state';
 	import { Navbar, NavBrand, NavLi, NavUl, NavHamburger, DarkMode, Button } from 'flowbite-svelte';
 	import { scale } from 'svelte/transition';
-	import TempLogo from './TempLogo.svelte';
 
 	const links = [
 		{ name: 'Home', href: '/' },
