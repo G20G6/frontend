@@ -15,6 +15,34 @@
 		console.log('Form submitted');
 		goto('/onboarding');
 	};
+
+	const users = $state({
+		tourist: {
+			language: '',
+			interests: ''
+		},
+		business: {
+			company_name: '',
+			company_type: '',
+			company_description: '',
+			province: '',
+			suburb: ''
+		},
+		youth: {
+			interests: '',
+			province: '',
+			suburb: ''
+		}
+	});
+	const user = users[user_type];
+	const userInputs = Object.keys(user);
+	console.log(userInputs);
+
+	/**
+	 * TOURIST: (language, interests)
+	 * BUSINESS: (company name, company type, company description, company location, )
+	 * YOUTH: (interest, province, suburb, )
+	 */
 </script>
 
 <div
@@ -26,22 +54,13 @@
 			{user_type?.charAt(0).toUpperCase() + user_type?.slice(1)} Onboarding
 		</h2>
 		<form class="space-y-6" {onsubmit}>
-			<div>
-				<Label for="fullname">Full name</Label>
-				<Input type="text" id="fullname" placeholder="Enter your full name" required />
-			</div>
-			<div>
-				<Label for="email">Email Address</Label>
-				<Input type="email" id="email" placeholder="Enter your email" required />
-			</div>
-			<div>
-				<Label for="password">Password</Label>
-				<Input type="password" id="password" placeholder="Create password" required />
-			</div>
-			<div>
-				<Label for="confirm_password">Confirm password</Label>
-				<Input type="password" id="confirm_password" placeholder="Confirm password" required />
-			</div>
+			{#each userInputs as input}
+				<div>
+					<Label for="fullname">{input}</Label>
+					<Input type="text" id={input} placeholder="Enter your {input}" required />
+				</div>
+			{/each}
+
 			<Button type="submit" class="w-full">Sign Up</Button>
 		</form>
 		<p

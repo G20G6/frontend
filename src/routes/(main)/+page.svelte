@@ -2,6 +2,8 @@
 	import { Button, Card } from 'flowbite-svelte';
 	import { fade, scale } from 'svelte/transition';
 	import { ArrowRightAltSolid } from 'flowbite-svelte-icons';
+	import { supabase } from '$lib/supabaseClient';
+	import { onMount } from 'svelte';
 </script>
 
 <!-- Hero Section -->

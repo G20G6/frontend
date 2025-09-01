@@ -1,5 +1,5 @@
 <script lang="ts">
-	import VirtualConcierge from '$lib/ui/components/virtualConcierge.svelte';
+	import VirtualConcierge from '$lib/ui/components/VirtualConcierge.svelte';
 	import { Button, Listgroup, ListPlaceholder, Search } from 'flowbite-svelte';
 	import { MicrophoneOutline } from 'flowbite-svelte-icons';
 	import { fade, scale } from 'svelte/transition';

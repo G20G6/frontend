@@ -3,13 +3,21 @@
 	import favicon from '$lib/assets/favicon.svg';
 	import { onMount } from 'svelte';
 	import modeobserver from '$lib/utils/modeobserver';
-	import Navbar from '$lib/ui/components/navbar.svelte';
-	import { button, ThemeProvider } from 'flowbite-svelte';
+	import Navbar from '$lib/ui/components/Navbar.svelte';
+	import { BProgress } from '@bprogress/core';
+	import { afterNavigate, beforeNavigate } from '$app/navigation';
 
 	let { children } = $props();
 
 	onMount(() => {
 		modeobserver();
+	});
+
+	beforeNavigate(() => {
+		BProgress.start();
+	});
+	afterNavigate(() => {
+		BProgress.done();
 	});
 </script>
 

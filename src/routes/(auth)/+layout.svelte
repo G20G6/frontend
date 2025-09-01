@@ -3,7 +3,7 @@
 	import { onMount } from 'svelte';
 	import modeobserver from '$lib/utils/modeobserver';
 	import { Navbar, NavBrand } from 'flowbite-svelte';
-	import TempLogo from '$lib/ui/tempLogo.svelte';
+	import TempLogo from '$lib/ui/TempLogo.svelte';
 
 	let { children } = $props();
 </script>

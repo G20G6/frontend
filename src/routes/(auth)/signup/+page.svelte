@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { Button, Input, Label } from 'flowbite-svelte';
+	import { Button, Datepicker, Input, Label } from 'flowbite-svelte';
 	import { scale } from 'svelte/transition';
 
 	const onsubmit = (e: any) => {
@@ -22,8 +22,13 @@
 				<Input type="text" id="fullname" placeholder="Enter your full name" required />
 			</div>
 			<div>
-				<Label for="age">Age</Label>
-				<Input type="number" id="age" placeholder="Enter your age" required />
+				<Label for="age">Date of birth</Label>
+				<Datepicker id="age" placeholder="Enter your age" required />
+			</div>
+			<div>
+				<Label for="country">Country</Label>
+				<!-- Change to select -->
+				<Input type="text" id="country" placeholder="Select your country" required />
 			</div>
 			<div>
 				<Label for="email">Email Address</Label>

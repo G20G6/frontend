@@ -33,7 +33,7 @@
 	const btns = [
 		{ label: "I'm a tourist", value: 'tourist' },
 		{ label: "I'm a business owner", value: 'business' },
-		{ label: "I'm an unemployed youth", value: 'youth' }
+		{ label: "I'm a youth", value: 'youth' }
 	];
 </script>
 
