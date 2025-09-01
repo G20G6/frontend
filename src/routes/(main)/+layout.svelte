@@ -3,9 +3,9 @@
 	import favicon from '$lib/assets/favicon.svg';
 	import { onMount } from 'svelte';
 	import modeobserver from '$lib/utils/modeobserver';
-	import Navbar from '$lib/ui/components/Navbar.svelte';
 	import { BProgress } from '@bprogress/core';
 	import { afterNavigate, beforeNavigate } from '$app/navigation';
+	import Navbar from '$lib/ui/components/navbar.svelte';
 
 	let { children } = $props();
 
