@@ -1,10 +1,11 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { page } from '$app/state';
-	import { Button, Input, Label } from 'flowbite-svelte';
+	import { Button, Input, Label, Select } from 'flowbite-svelte';
 	import { scale } from 'svelte/transition';
+	import { getOnboardingUser } from '../controller.svelte';
 
-	const user_type = page.params.user;
+	const user_type = page.params.user || '';
 
 	//the validation is handled in the server, so no need for extra checks here
 
@@ -13,31 +14,11 @@
 	const onsubmit = (e: any) => {
 		e.preventDefault();
 		console.log('Form submitted');
-		goto('/onboarding');
+		console.log(user);
+		goto('/dashboard');
 	};
 
-	const users = $state({
-		tourist: {
-			language: '',
-			interests: ''
-		},
-		business: {
-			company_name: '',
-			company_type: '',
-			company_description: '',
-			province: '',
-			suburb: ''
-		},
-		youth: {
-			interests: '',
-			province: '',
-			suburb: ''
-		}
-	});
-	const user = users[user_type];
-	const userInputs = Object.keys(user);
-	console.log(userInputs);
-
+	const user = $state(getOnboardingUser(user_type));
 	/**
 	 * TOURIST: (language, interests)
 	 * BUSINESS: (company name, company type, company description, company location, )
@@ -54,21 +35,43 @@
 			{user_type?.charAt(0).toUpperCase() + user_type?.slice(1)} Onboarding
 		</h2>
 		<form class="space-y-6" {onsubmit}>
-			{#each userInputs as input}
+			{#each user.inputs as input}
 				<div>
-					<Label for="fullname">{input}</Label>
-					<Input type="text" id={input} placeholder="Enter your {input}" required />
+					<Label for={input.name}>{input.name}</Label>
+					<!-- 
+					inputs: [
+				{ name: 'language', value: '', type: 'text' },
+				{ name: 'interests', value: '', type: 'multi-select' }
+			]
+					 -->
+					{#if input.type === 'text'}
+						<Input
+							type="text"
+							id={input.name}
+							bind:value={input.value}
+							placeholder="Enter your {input.name}"
+							required
+						/>
+					{:else if input.type === 'select'}
+						<Select
+							id={input.name}
+							placeholder="Select your {input.name}"
+							bind:value={input.value}
+							required
+						></Select>
+					{:else if input.type === 'multi-select'}
+						<!-- A group of buttons -->
+						<Select
+							id={input.name}
+							placeholder="Select your {input.name}"
+							bind:value={input.value}
+							required
+						></Select>
+					{/if}
 				</div>
 			{/each}
 
-			<Button type="submit" class="w-full">Sign Up</Button>
+			<Button type="submit" class="w-full">Submit</Button>
 		</form>
-		<p
-			class="dark:text-gray -400 mt-4 text-center text-sm
-text-gray-600"
-		>
-			Already have an account?
-			<a href="/login" class="text-primary-500 hover:underline">Log in</a>
-		</p>
 	</div>
 </div>
