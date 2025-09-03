@@ -61,7 +61,7 @@
 			{/each}
 		</SidebarGroup>
 	</Sidebar>
-	<div class="h-96 overflow-auto px-4 md:ml-64">
+	<div class="h-full overflow-auto px-4 md:ml-64">
 		<main class="flex-1 p-6">
 			<h1 class="mb-6 text-3xl font-bold text-neutral-800">Discover Kasi Khaya</h1>
 
