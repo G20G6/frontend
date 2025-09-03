@@ -7,6 +7,7 @@
 		{ name: 'Home', href: '/' },
 		{ name: 'About Us', href: '/about' },
 		{ name: 'Discover', href: '/discover' },
+		{ name: 'Careers', href: '/careers' },
 		{ name: 'Contact Us', href: '/contact' }
 	];
 	let isDashboard = $state(false);

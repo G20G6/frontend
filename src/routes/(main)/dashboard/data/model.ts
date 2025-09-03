@@ -1,6 +1,12 @@
+import type { Component } from "svelte";
+import BusinessDashboard from "../components/BusinessDashboard.svelte";
+import DataCollectorDashboard from "../components/DataCollectorDashboard.svelte";
+import TourGuideDashboard from "../components/TourGuideDashboard.svelte";
+import TouristDashboard from "../components/TouristDashboard.svelte";
+
 export interface User {
-  type: 'tourist' | 'business' | 'youth';
-  page: string;
+  type: 'tourist' | 'business' | 'tour-guide' | 'data-collector';
+  page: Component;
   sidebarItems: Array<{ name: string; href: string }>;
   headerItems: Array<{ name: string; href: string }>;
 }
@@ -8,7 +14,7 @@ export interface User {
 export const dashboardUsers: User[] = [
   {
     type: 'tourist',
-    page: 'Welcome, Tourist! Explore your Cape Town adventure.',
+    page: TouristDashboard,
     sidebarItems: [
       { name: 'Dashboard', href: '/dashboard' },
       { name: 'Profile', href: '/dashboard/profile' },
@@ -21,7 +27,7 @@ export const dashboardUsers: User[] = [
   },
   {
     type: 'business',
-    page: 'Welcome, Business Owner! Manage your listings.',
+    page: BusinessDashboard,
     sidebarItems: [
       { name: 'Dashboard', href: '/dashboard' },
       { name: 'Listings', href: '/dashboard/listings' },
@@ -33,8 +39,21 @@ export const dashboardUsers: User[] = [
     ]
   },
   {
-    type: 'youth',
-    page: 'Welcome, Youth! Oversee platform operations.',
+    type: 'tour-guide',
+    page: TourGuideDashboard,
+    sidebarItems: [
+      { name: 'Dashboard', href: '/dashboard' },
+      { name: 'Users', href: '/dashboard/users' },
+      { name: 'Reports', href: '/dashboard/reports' }
+    ],
+    headerItems: [
+      { name: 'Dashboard', href: '/dashboard' },
+      { name: 'Users', href: '/dashboard/users' }
+    ]
+  },
+  {
+    type: 'data-collector',
+    page: DataCollectorDashboard,
     sidebarItems: [
       { name: 'Dashboard', href: '/dashboard' },
       { name: 'Users', href: '/dashboard/users' },

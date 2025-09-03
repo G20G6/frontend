@@ -6,6 +6,14 @@
 	const onsubmit = (e: any) => {
 		e.preventDefault();
 		console.log('Form submitted');
+		//check if the user is a youth, by checking the career in the local storage
+		const career = localStorage.getItem('career') || '';
+		if (career.length) {
+			localStorage.removeItem('career');
+			goto('/onboarding/youth?career=' + career);
+			return;
+		}
+		//else go to onboarding to choose user type
 		goto('/onboarding');
 	};
 </script>

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
+	import { afterNavigate, goto } from '$app/navigation';
 	import { page } from '$app/state';
 	import { Button, Input, Label, Select } from 'flowbite-svelte';
 	import { scale } from 'svelte/transition';
@@ -13,17 +13,37 @@
 
 	const onsubmit = (e: any) => {
 		e.preventDefault();
-		console.log('Form submitted');
-		console.log(user);
 		goto('/dashboard');
 	};
 
-	const user = $state(getOnboardingUser(user_type));
+	let user = $state(getOnboardingUser(user_type));
 	/**
 	 * TOURIST: (language, interests)
 	 * BUSINESS: (company name, company type, company description, company location, )
 	 * YOUTH: (interest, province, suburb, )
 	 */
+
+	afterNavigate(({ from, to }) => {
+		const career = to?.url.searchParams.get('career');
+		if (career) {
+			user.inputs = user.inputs.map((input) => {
+				if (input.name === 'Program') {
+					input.options = input.options.map((option) => {
+						if (option.id === career) {
+							return { ...option, value: option.value }; // Ensure value is set
+						}
+						return option;
+					});
+					// Optionally set the input value to the selected option's value
+					const selectedOption = input.options.find((option) => option.id === career);
+					if (selectedOption) {
+						input.value = selectedOption.value;
+					}
+				}
+				return input;
+			});
+		}
+	});
 </script>
 
 <div
@@ -55,13 +75,15 @@
 					{:else if input.type === 'select'}
 						<Select
 							id={input.name}
-							placeholder="Select your {input.name}"
+							items={input.options}
+							placeholder="Select {input.name}"
 							bind:value={input.value}
 							required
 						></Select>
 					{:else if input.type === 'multi-select'}
 						<!-- A group of buttons -->
 						<Select
+							items={input.options}
 							id={input.name}
 							placeholder="Select your {input.name}"
 							bind:value={input.value}

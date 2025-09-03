@@ -1,7 +1,7 @@
 import { dashboardUsers } from "./model";
 
 export const dashboardState = $state({
-    
+    user_type: 'business'
 });
 
 

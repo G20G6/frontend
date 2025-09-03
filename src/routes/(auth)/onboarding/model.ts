@@ -4,6 +4,11 @@ export type OnboardingUser = {
 			name: string;
 			value: string;
 			type: string;
+            options?: {
+                name: string;
+                value: string;
+                id?: string
+            }[]
 		}[];
 	};
 
@@ -13,8 +18,24 @@ export const onboardingUsers : OnboardingUser[] = [
     {
         type: 'tourist',
         inputs: [
-            { name: 'Language', value: '', type: 'select' },
-            { name: 'Interests', value: '', type: 'multi-select' }
+            { 
+                name: 'Language', 
+                value: '',
+                type: 'select', 
+                options: [
+                    {name: 'Tour Guide 12 Month Program', value: "Tour Guide 12 Month Program"},
+                    {name: 'Data Collector 12 Month Program', value: "Data Collector 12 Month Program"}
+                ]
+            },
+            { 
+                name: 'Interests', 
+                value: '', 
+                type: 'multi-select', 
+                options: [
+                    {name: 'Tour Guide 12 Month Program', value: "Tour Guide 12 Month Program"},
+                    {name: 'Data Collector 12 Month Program', value: "Data Collector 12 Month Program"}
+                ]
+             }
         ]
     },
     {
@@ -38,7 +59,11 @@ export const onboardingUsers : OnboardingUser[] = [
             {
                 name: 'Province',
                 value: '',
-                type: 'select'
+                type: 'select',
+                options: [
+                    {name: 'Tour Guide 12 Month Program', value: "Tour Guide 12 Month Program"},
+                    {name: 'Data Collector 12 Month Program', value: "Data Collector 12 Month Program"}
+                ]
             },
             {
                 name: 'Suburb',
@@ -51,14 +76,31 @@ export const onboardingUsers : OnboardingUser[] = [
         type: 'youth',
         inputs: [
             {
+                name: 'Program',
+                value: '',
+                type: 'select',
+                options: [
+                    {name: 'Tour Guide 12 Month Program', id: "tour-guide", value: "Tour Guide 12 Month Program"},
+                    {name: 'Data Collector 12 Month Program',id: "data-collector", value: "Data Collector 12 Month Program"}
+                ]
+            },
+            {
                 name: 'Interests',
                 value: '',
-                type: 'multi-select'
+                type: 'multi-select',
+                options: [
+                    {name: 'Tour Guide 12 Month Program', value: "Tour Guide 12 Month Program"},
+                    {name: 'Data Collector 12 Month Program', value: "Data Collector 12 Month Program"}
+                ]
             },
             {
                 name: 'Province',
                 value: '',
-                type: 'select'
+                type: 'select',
+                options: [
+                    {name: 'Tour Guide 12 Month Program', value: "Tour Guide 12 Month Program"},
+                    {name: 'Data Collector 12 Month Program', value: "Data Collector 12 Month Program"}
+                ]
             },
             {
                 name: 'Suburb',
