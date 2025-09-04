@@ -41,7 +41,7 @@
 						</Button>
 					</Search>
 				</form>
-				<Listgroup active items={examplePrompts} onclick={(item) => (searchTerm = item?.detail)} />
+				<Listgroup active items={examplePrompts} onclick={(item) => (searchTerm = String(item?.detail))} />
 			</div>
 		</div>
 	</section>
