@@ -1,0 +1,161 @@
+<script>
+	import { Button, Input, Label } from 'flowbite-svelte';
+	import { Send, SendHorizonal, X } from '@lucide/svelte';
+	import { onMount } from 'svelte';
+	import { page } from '$app/state';
+	import { scale } from 'svelte/transition';
+
+	// State management
+	let isOpen = $state(false);
+	let messages = $state([{ text: 'Hi there, how can I help you today?', sender: 'ai' }]);
+	let userInput = $state('');
+	let messagesContainer = $state(null); // Reference to messages div
+	// Track current page context
+	let currentPage = $state('home');
+
+	// Toggle chat window
+	const toggleChat = () => {
+		isOpen = !isOpen;
+	};
+
+	// Mock user data (replace with actual user data logic)
+	const user = {
+		name: 'Guest',
+		isAuthenticated: false
+	};
+
+	// Handle sending messages
+	const sendMessage = async () => {
+		if (userInput.trim() === '') return;
+
+		// Add user message
+		messages = [...messages, { text: userInput, sender: 'user' }];
+		const req = await fetch('/api/chat', {
+			method: 'POST',
+			body: JSON.stringify({ prompt: userInput }),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		});
+
+		const res = await req.json();
+		// Add AI response
+		messages = [...messages, { text: res.response, sender: 'ai' }];
+		userInput = '';
+	};
+
+	// Handle Enter key press
+	const handleKeyPress = (e) => {
+		if (e.key === 'Enter') {
+			if (userInput.length > 0) sendMessage();
+		}
+	};
+
+	// Auto-scroll to bottom when messages update
+	$effect(() => {
+		if (messagesContainer && messages.length > 0) {
+			messagesContainer.scrollTop = messagesContainer.scrollHeight;
+		}
+	});
+
+	// Detect current page (simplified, replace with actual routing logic)
+	onMount(() => {
+		// Example: Detect page from URL or route
+		const path = window.location.pathname;
+		if (path.includes('booking')) {
+			currentPage = 'booking';
+		} else if (path.includes('profile')) {
+			currentPage = 'profile';
+		} else {
+			currentPage = 'home';
+		}
+	});
+</script>
+
+<div class="fixed right-4 bottom-4 z-50 sm:right-6 sm:bottom-6">
+	<!-- Chat Toggle Button -->
+	{#if !isOpen}
+		<div transition:scale={{ delay: 300 }}>
+			<Button
+				color="primary"
+				class="px-3 py-2 text-sm shadow-lg sm:px-4 sm:text-base"
+				onclick={toggleChat}
+			>
+				<span class="flex items-center gap-2"> Chat with KhayaAI </span>
+			</Button>
+		</div>
+	{/if}
+
+	<!-- Chat Window -->
+	{#if isOpen}
+		<div
+			transition:scale={{ duration: 300 }}
+			class="flex h-[70vh] max-h-[400px] w-[90vw] max-w-[320px] flex-col rounded-lg bg-white shadow-xl sm:w-80 sm:max-w-[400px]"
+		>
+			<!-- Header -->
+			<div
+				class="flex items-center justify-between rounded-t-lg bg-primary-600 p-3 text-white sm:p-4"
+			>
+				<span class="text-sm font-semibold sm:text-base"
+					>{page.url.pathname === '/discover' ? 'KhayaAI Concierge' : 'KhayaAI'}</span
+				>
+				<Button color="alternative" class="p-1" onclick={toggleChat}>
+					<X size={18} />
+				</Button>
+			</div>
+
+			<!-- Messages -->
+			<div bind:this={messagesContainer} class="flex-1 overflow-y-auto bg-gray-50 p-3 sm:p-4">
+				{#each messages as message}
+					<div
+						transition:scale={{ duration: 300 }}
+						class={`mb-3 max-w-[80%] rounded-lg p-2 text-sm sm:text-base ${
+							message.sender === 'user'
+								? 'ml-auto bg-primary-100 text-primary-800'
+								: 'bg-gray-200 text-gray-800'
+						}`}
+					>
+						{message.text}
+					</div>
+				{/each}
+			</div>
+
+			<!-- Input -->
+			<div class="border-t bg-white p-3 sm:p-4">
+				<div class="flex gap-2">
+					<Input
+						bind:value={userInput}
+						placeholder="Type your message..."
+						class="flex-1 text-sm sm:text-base"
+						onkeydown={handleKeyPress}
+					/>
+					<Button color="primary" class="p-2" onclick={sendMessage}>
+						<SendHorizonal />
+					</Button>
+				</div>
+			</div>
+		</div>
+	{/if}
+</div>
+
+<style>
+	/* Scrollbar styling for chat window */
+	::-webkit-scrollbar {
+		width: 6px;
+	}
+	::-webkit-scrollbar-track {
+		background: #f1f1f1;
+	}
+	::-webkit-scrollbar-thumb {
+		background: #888;
+		border-radius: 3px;
+	}
+	::-webkit-scrollbar-thumb:hover {
+		background: #555;
+	}
+
+	/* Smooth scrolling for mobile */
+	:global(.overflow-y-auto) {
+		scroll-behavior: smooth;
+	}
+</style>

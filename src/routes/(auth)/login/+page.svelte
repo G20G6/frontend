@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import Seo from '$lib/ui/SEO.svelte';
 	import { Button, Input, Label } from 'flowbite-svelte';
 	import { scale } from 'svelte/transition';
 
@@ -9,6 +10,13 @@
 		goto('/dashboard');
 	};
 </script>
+
+<Seo
+	title="Login"
+	desc="Login to your account"
+	img="https://kasikhaya.vercel.app/images/logo.jpg"
+	langs={['en-ZA', 'en-US']}
+/>
 
 <div
 	transition:scale={{ delay: 0, duration: 500 }}

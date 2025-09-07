@@ -4,7 +4,10 @@
 	import { ArrowRightAltSolid } from 'flowbite-svelte-icons';
 	import { supabase } from '$lib/supabaseClient';
 	import { onMount } from 'svelte';
+	import Seo from '$lib/ui/SEO.svelte';
 </script>
+
+<Seo title="Home" desc="Home page" langs={['en-ZA', 'en-US']} />
 
 <!-- Hero Section -->
 <section transition:scale class="bg-background bg-primary-100 py-20">
@@ -45,7 +48,6 @@
 		</div>
 	</div>
 </section>
-
 <!-- Features -->
 <section transition:fade class="bg-neutral-100 py-16">
 	<div class="container mx-auto px-4">

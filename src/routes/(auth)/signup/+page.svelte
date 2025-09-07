@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import Seo from '$lib/ui/SEO.svelte';
 	import { Button, Datepicker, Input, Label } from 'flowbite-svelte';
 	import { scale } from 'svelte/transition';
 
@@ -18,6 +19,7 @@
 	};
 </script>
 
+<Seo title="Sign Up" desc="Sign up to your account" langs={['en-ZA', 'en-US']} />
 <div
 	transition:scale={{ duration: 400 }}
 	class="flex w-full items-center justify-center bg-white lg:min-h-screen"

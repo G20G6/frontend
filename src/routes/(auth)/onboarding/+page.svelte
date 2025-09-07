@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import Seo from '$lib/ui/SEO.svelte';
 	import { Button, Input, Label } from 'flowbite-svelte';
 
 	const user = $state({
@@ -36,6 +37,8 @@
 		{ label: "I'm a youth", value: 'youth' }
 	];
 </script>
+
+<Seo title="Onboarding" desc="Onboarding to your account" langs={['en-ZA', 'en-US']} />
 
 <div class="flex w-full items-center justify-center bg-white lg:min-h-screen">
 	<div class="w-full max-w-md rounded-lg bg-white p-8">

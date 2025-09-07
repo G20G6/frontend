@@ -2,6 +2,7 @@
 	import { Accordion, AccordionItem, Button } from 'flowbite-svelte';
 	import { ChevronDown } from '@lucide/svelte';
 	import { goto } from '$app/navigation';
+	import Seo from '$lib/ui/SEO.svelte';
 
 	const programs = [
 		{
@@ -60,6 +61,8 @@
 		goto('/signup');
 	};
 </script>
+
+<Seo title="Careers" desc="Careers at Kasi Khaya" langs={['en-ZA', 'en-US']} />
 
 <section class="flex flex-col items-center justify-center py-8">
 	<div class="container mx-auto px-4 lg:w-2/3">
