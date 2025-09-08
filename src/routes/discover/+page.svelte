@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { Button, Modal, Search } from 'flowbite-svelte';
-	import { MapPin, Plus, SearchIcon, Trash2 } from '@lucide/svelte';
+	import { Button, Navbar, Modal, NavBrand, Search } from 'flowbite-svelte';
+	import { List, MapPin, Plus, SearchIcon, Trash2 } from '@lucide/svelte';
 	import { Sidebar, SidebarGroup, SidebarItem, SidebarButton, uiHelpers } from 'flowbite-svelte';
 	import { ChartOutline, GridSolid, MailBoxSolid, UserSolid } from 'flowbite-svelte-icons';
 	import { page } from '$app/state';
@@ -10,6 +10,7 @@
 	import ExperienceItem from '$lib/ui/components/ExperienceItem.svelte';
 	import { afterNavigate } from '$app/navigation';
 	import Seo from '$lib/ui/SEO.svelte';
+	import { scale } from 'svelte/transition';
 
 	// Static provinces (South African context)
 	const provinces = [
@@ -78,8 +79,44 @@
 	});
 </script>
 
-<Seo title="Discover" desc="Discover Kasi Khaya" langs={['en-ZA', 'en-US']} />
-<AiChat />
+<Seo
+	title="Discover"
+	desc="Discover Kasi Khaya"
+	langs={['en-ZA', 'en-US']}
+	keywords="kasi khaya, tourism, discover places,experiences, food, drinks,
+history, culture, sustainability"
+/>
+
+<div class="fixed bottom-4 z-50 flex w-full items-center justify-center">
+	<div
+		transition:scale
+		class="flex w-fit items-center justify-center gap-4 rounded-full border bg-white p-5 shadow-2xl"
+	>
+		<AiChat />
+		<!-- ITERINARY -->
+		{#if !isIterinaryOpen}
+			<Button onclick={toggleIterinary} class="space-x-5">
+				<List /> Itinerary({itinerary.data.length})
+			</Button>
+		{/if}
+	</div>
+</div>
+
+<Navbar class="bg-background right-0 left-0 z-50 flex w-full items-center justify-between py-3">
+	<div class="flex items-center">
+		<SidebarButton onclick={sidebar.toggle} class="mb-2" />
+
+		<NavBrand href="/">
+			<img src="/images/logo-icon.jpg" class="aspect-square h-8 rounded-full sm:h-10" alt="icon" />
+			<img src="/images/logo-raw.png" class="h-8 sm:h-10" alt="logo" />
+			<span class="hidden self-center text-xl font-semibold whitespace-nowrap dark:text-white"
+				>KasiKhaya</span
+			>
+		</NavBrand>
+	</div>
+
+	<Button href="/dashboard">Dashboard</Button>
+</Navbar>
 
 <div class="relative h-[87svh]">
 	<Sidebar
@@ -93,8 +130,8 @@
 		class="top-0 z-40 h-full w-[75vw] bg-white sm:w-64"
 	>
 		<SidebarGroup>
-			<h2 class="p-2 text-lg font-bold sm:p-3">Provinces</h2>
-			{#each provinces as province}
+			<h3 class="p-2 text-lg font-bold sm:p-3">Provinces</h3>
+			{#each provinces.sort() as province}
 				<SidebarItem
 					label={province}
 					color="primary"
@@ -109,11 +146,9 @@
 		</SidebarGroup>
 	</Sidebar>
 	<div class="h-full overflow-auto px-2 sm:px-4 md:ml-64">
+		<div class="flex items-center gap-2 sm:gap-4"></div>
 		<main class="w-full flex-1 space-y-6 p-4 sm:p-6">
-			<div class="flex items-center gap-2 sm:gap-4">
-				<SidebarButton onclick={sidebar.toggle} class="mb-2 p-2 sm:p-3" />
-				<h1 class="text-2xl font-bold text-neutral-800 sm:text-3xl">Discover Kasi Khaya</h1>
-			</div>
+			<h1 class="text-2xl font-bold text-neutral-800 sm:text-3xl">Discover Kasi Khaya</h1>
 
 			<Search
 				bind:value={searchTerm}
@@ -181,13 +216,7 @@
 			{/if}
 
 			<!-- Itinerary Modal -->
-			<!-- ITERINARY -->
-			{#if itinerary.data.length > 0 && !isIterinaryOpen}
-				<Button onclick={toggleIterinary} class="fixed right-6 bottom-20 z-30">
-					My Iterinary ({itinerary.data.length})
-				</Button>
-			{/if}
-			<Modal title="Your Iterinary" form bind:open={isIterinaryOpen}>
+			<Modal title="Your itinerary" form bind:open={isIterinaryOpen}>
 				{#if itinerary.data.length === 0}
 					<p class="text-sm text-neutral-600 sm:text-base">No items in your itinerary yet.</p>
 				{:else}
@@ -206,12 +235,8 @@
 				{/if}
 				{#snippet footer()}
 					<div class="grid w-full grid-cols-2 gap-2">
-						<Button type="submit" href="/booking" class="w-full" value="success"
-							>Start Booking</Button
-						>
-						<Button type="submit" class="w-full" value="decline" color="alternative"
-							>Continue Exploring</Button
-						>
+						<Button type="submit" href="/booking" class="w-full">Book Now</Button>
+						<Button type="submit" class="w-full" value="decline" color="alternative">Close</Button>
 					</div>
 				{/snippet}
 			</Modal>

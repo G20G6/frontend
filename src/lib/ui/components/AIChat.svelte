@@ -1,6 +1,6 @@
-<script>
+<script lang="ts">
 	import { Button, Input, Label } from 'flowbite-svelte';
-	import { Send, SendHorizonal, X } from '@lucide/svelte';
+	import { MessageCircle, Send, SendHorizonal, X } from '@lucide/svelte';
 	import { onMount } from 'svelte';
 	import { page } from '$app/state';
 	import { scale } from 'svelte/transition';
@@ -9,7 +9,7 @@
 	let isOpen = $state(false);
 	let messages = $state([{ text: 'Hi there, how can I help you today?', sender: 'ai' }]);
 	let userInput = $state('');
-	let messagesContainer = $state(null); // Reference to messages div
+	let messagesContainer: HTMLDivElement = $state(null); // Reference to messages div
 	// Track current page context
 	let currentPage = $state('home');
 
@@ -58,10 +58,8 @@
 		}
 	});
 
-	// Detect current page (simplified, replace with actual routing logic)
 	onMount(() => {
-		// Example: Detect page from URL or route
-		const path = window.location.pathname;
+		const path = page.url.pathname;
 		if (path.includes('booking')) {
 			currentPage = 'booking';
 		} else if (path.includes('profile')) {
@@ -72,16 +70,16 @@
 	});
 </script>
 
-<div class="fixed right-4 bottom-4 z-50 sm:right-6 sm:bottom-6">
+<div class="">
 	<!-- Chat Toggle Button -->
 	{#if !isOpen}
 		<div transition:scale={{ delay: 300 }}>
 			<Button
-				color="primary"
+				color="secondary"
 				class="px-3 py-2 text-sm shadow-lg sm:px-4 sm:text-base"
 				onclick={toggleChat}
 			>
-				<span class="flex items-center gap-2"> Chat with KhayaAI </span>
+				<span class="flex items-center gap-2"> <MessageCircle /> KhayaAI </span>
 			</Button>
 		</div>
 	{/if}
@@ -90,7 +88,7 @@
 	{#if isOpen}
 		<div
 			transition:scale={{ duration: 300 }}
-			class="flex h-[70vh] max-h-[400px] w-[90vw] max-w-[320px] flex-col rounded-lg bg-white shadow-xl sm:w-80 sm:max-w-[400px]"
+			class="fixed right-4 bottom-4 z-50 flex h-[85svh] w-[90vw] flex-col rounded-lg bg-white shadow-xl sm:right-6 sm:bottom-6 sm:max-w-[400px]"
 		>
 			<!-- Header -->
 			<div

@@ -1,13 +1,15 @@
 <script lang="ts">
 	import { page } from '$app/state';
-	import { Navbar, NavBrand, NavLi, NavUl, NavHamburger, DarkMode, Button } from 'flowbite-svelte';
+	import { Navbar, NavBrand, NavLi, NavUl, NavHamburger, Button } from 'flowbite-svelte';
 	import { scale } from 'svelte/transition';
 
+	let { Hamburger = NavHamburger } = $props();
 	const links = [
 		{ name: 'Home', href: '/' },
 		{ name: 'About Us', href: '/about' },
 		{ name: 'Discover', href: '/discover' },
 		{ name: 'Careers', href: '/careers' },
+		{ name: 'Business Center', href: '/business' },
 		{ name: 'Contact Us', href: '/contact' }
 	];
 	let isDashboard = $state(false);
@@ -19,7 +21,7 @@
 	class="bg-background fixed top-0 right-0 left-0 z-50 flex w-full items-center justify-between lg:p-1"
 >
 	<div class="flex items-center">
-		<NavHamburger />
+		<Hamburger />
 		<NavBrand href="/">
 			<img src="/images/logo-icon.jpg" class="aspect-square h-8 rounded-full sm:h-10" alt="icon" />
 			<img src="/images/logo-raw.png" class="h-8 sm:h-10" alt="logo" />
@@ -33,13 +35,14 @@
 		<Button color="red" href="/signup">Logout</Button>
 	{:else}
 		<NavUl
-			class="lg:flex lg:items-center "
+			class=" lg:flex lg:items-center"
 			transition={scale}
 			transitionParams={{ start: 0.8, duration: 200 }}
 		>
 			{#each links as link}
-				<NavLi class={page.url.pathname === link.href ? 'text-primary-500' : ''} href={link.href}
-					>{link.name}</NavLi
+				<NavLi
+					class="{page.url.pathname === link.href ? 'text-primary-500' : ''} text-[16px]"
+					href={link.href}>{link.name}</NavLi
 				>
 			{/each}
 		</NavUl>

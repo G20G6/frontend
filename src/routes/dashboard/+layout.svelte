@@ -4,8 +4,12 @@
 	import { ChartOutline, GridSolid, MailBoxSolid, UserSolid } from 'flowbite-svelte-icons';
 	import { page } from '$app/state';
 	import { dashboardState, getDashboardUser } from './data/controller.svelte';
+	import { Navbar, NavBrand, NavLi, NavUl, NavHamburger, Button } from 'flowbite-svelte';
+	import { scale } from 'svelte/transition';
 	let { children } = $props();
 
+	let isDashboard = $state(false);
+	let isLoggedIn = $state(true);
 	let activeUrl = $state(page.url.pathname);
 
 	const user = getDashboardUser(dashboardState.user_type);
@@ -13,11 +17,11 @@
 	const sidebar = uiHelpers();
 	let isDemoOpen = $state(false);
 	const closeDemoSidebar = sidebar.close;
+
 	$effect(() => {
 		isDemoOpen = sidebar.isOpen;
 		activeUrl = page.url.pathname;
 	});
-	const spanClass = 'flex-1 ms-3 whitespace-nowrap';
 	const activeClass =
 		'flex items-center p-2 text-base font-normal text-white bg-primary-600 dark:bg-primary-700 rounded-lg dark:text-white hover:bg-primary-800 dark:hover:bg-primary-800';
 	const nonActiveClass =
@@ -27,9 +31,26 @@
 <svelte:head>
 	<link rel="icon" href={favicon} />
 </svelte:head>
+<!--DASHBOARD NAVBAR-->
+<Navbar class="bg-background right-0 left-0 z-50 flex w-full items-center justify-between py-3">
+	<div class="flex items-center">
+		<SidebarButton onclick={sidebar.toggle} class="mb-2" />
 
-<SidebarButton onclick={sidebar.toggle} class="mb-2" />
+		<NavBrand href="/">
+			<img src="/images/logo-icon.jpg" class="aspect-square h-8 rounded-full sm:h-10" alt="icon" />
+			<img src="/images/logo-raw.png" class="h-8 sm:h-10" alt="logo" />
+			<span class="hidden self-center text-xl font-semibold whitespace-nowrap dark:text-white"
+				>KasiKhaya</span
+			>
+		</NavBrand>
+	</div>
+
+	<Button color="red" href="/signup">Logout</Button>
+</Navbar>
+
+<!-- DASHBOARD MAIN SECTION -->
 <div class="relative h-[87svh]">
+	<!-- DASHBOARD SIDEBAR -->
 	<Sidebar
 		{activeUrl}
 		backdrop={false}
@@ -53,6 +74,7 @@
 		</SidebarGroup>
 	</Sidebar>
 	<div class="h-96 overflow-auto px-4 md:ml-64">
+		<!-- DASHBOARD CONTENT/PAGES -->
 		<div class="flex">
 			{@render children?.()}
 		</div>
