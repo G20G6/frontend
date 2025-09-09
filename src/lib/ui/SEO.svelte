@@ -29,5 +29,4 @@
 	<meta property="og:image" content={img} />
 
 	<link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />
-	<link rel="canonical" href={page.url.pathname} />
 </svelte:head>

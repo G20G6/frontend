@@ -4,6 +4,8 @@
 	import { onMount } from 'svelte';
 	import { page } from '$app/state';
 	import { scale } from 'svelte/transition';
+	import { itinerary } from '../../../routes/discover/controller.svelte';
+	import { MessageDotsOutline } from 'flowbite-svelte-icons';
 
 	// State management
 	let isOpen = $state(false);
@@ -18,6 +20,8 @@
 		isOpen = !isOpen;
 	};
 
+	let isTyping = $state(false);
+
 	// Mock user data (replace with actual user data logic)
 	const user = {
 		name: 'Guest',
@@ -28,20 +32,35 @@
 	const sendMessage = async () => {
 		if (userInput.trim() === '') return;
 
+		let tempUserInput = userInput;
+		userInput = '';
 		// Add user message
-		messages = [...messages, { text: userInput, sender: 'user' }];
+		messages = [...messages, { text: tempUserInput, sender: 'user' }];
+
+		isTyping = true;
+
+		tempUserInput += `\nContext: {instruction: "You are an assistant for this user on our app",currency: "ZAR",page: ${page.url.pathname}, userItinerary: ${JSON.stringify(itinerary.get())}`;
 		const req = await fetch('/api/chat', {
 			method: 'POST',
-			body: JSON.stringify({ prompt: userInput }),
+			body: JSON.stringify({ prompt: tempUserInput }),
 			headers: {
 				'Content-Type': 'application/json'
 			}
 		});
 
 		const res = await req.json();
+
+		//When error occurs, add error message and return the user input back to the form.
+		if (res.error) {
+			isTyping = false;
+			messages = [...messages, { text: res.error, sender: 'ai' }];
+			userInput = tempUserInput;
+			return;
+		}
+		//When the response is successful
 		// Add AI response
+		isTyping = false;
 		messages = [...messages, { text: res.response, sender: 'ai' }];
-		userInput = '';
 	};
 
 	// Handle Enter key press
@@ -88,11 +107,11 @@
 	{#if isOpen}
 		<div
 			transition:scale={{ duration: 300 }}
-			class="fixed right-4 bottom-4 z-50 flex h-[85svh] w-[90vw] flex-col rounded-lg bg-white shadow-xl sm:right-6 sm:bottom-6 sm:max-w-[400px]"
+			class="fixed right-0 bottom-0 z-50 flex h-[88svh] w-[100vw] flex-col bg-white shadow-xl sm:right-6 sm:bottom-6 sm:max-w-[400px] lg:right-4 lg:bottom-4 lg:rounded-lg"
 		>
 			<!-- Header -->
 			<div
-				class="flex items-center justify-between rounded-t-lg bg-primary-600 p-3 text-white sm:p-4"
+				class="z-50 flex items-center justify-between bg-primary-600 p-3 text-white sm:p-4 lg:rounded-t-lg"
 			>
 				<span class="text-sm font-semibold sm:text-base"
 					>{page.url.pathname === '/discover' ? 'KhayaAI Concierge' : 'KhayaAI'}</span
@@ -107,7 +126,7 @@
 				{#each messages as message}
 					<div
 						transition:scale={{ duration: 300 }}
-						class={`mb-3 max-w-[80%] rounded-lg p-2 text-sm sm:text-base ${
+						class={`mb-3 w-fit max-w-[80%] rounded-lg p-2 text-sm sm:text-base ${
 							message.sender === 'user'
 								? 'ml-auto bg-primary-100 text-primary-800'
 								: 'bg-gray-200 text-gray-800'
@@ -116,6 +135,15 @@
 						{message.text}
 					</div>
 				{/each}
+
+				{#if isTyping}
+					<div
+						transition:scale={{ duration: 300 }}
+						class="a mb-3 flex w-fit animate-bounce items-center gap-2 rounded-lg bg-gray-200 p-2 text-xs text-gray-800"
+					>
+						<MessageDotsOutline />typing...
+					</div>
+				{/if}
 			</div>
 
 			<!-- Input -->

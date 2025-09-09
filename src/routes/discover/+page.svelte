@@ -2,15 +2,16 @@
 	import { Button, Navbar, Modal, NavBrand, Search } from 'flowbite-svelte';
 	import { List, MapPin, Plus, SearchIcon, Trash2 } from '@lucide/svelte';
 	import { Sidebar, SidebarGroup, SidebarItem, SidebarButton, uiHelpers } from 'flowbite-svelte';
-	import { ChartOutline, GridSolid, MailBoxSolid, UserSolid } from 'flowbite-svelte-icons';
 	import { page } from '$app/state';
 	import AiChat from '$lib/ui/components/AIChat.svelte';
 	import { experiences } from './model';
-	import { itinerary, removeFromItinerary } from './controller.svelte';
+	import { itinerary } from './controller.svelte';
 	import ExperienceItem from '$lib/ui/components/ExperienceItem.svelte';
 	import { afterNavigate } from '$app/navigation';
 	import Seo from '$lib/ui/SEO.svelte';
 	import { scale } from 'svelte/transition';
+	import moment from 'moment';
+	import { onMount } from 'svelte';
 
 	// Static provinces (South African context)
 	const provinces = [
@@ -37,13 +38,12 @@
 	const closeDemoSidebar = sidebar.close;
 	$effect(() => {
 		isDemoOpen = sidebar.isOpen;
-		activeUrl = page.url.pathname;
+		activeUrl = page.url.searchParams.get('search') || page.url.pathname;
 	});
-	const spanClass = 'flex-1 ms-3 whitespace-nowrap';
 	const activeClass =
 		'flex items-center p-2 text-base font-normal text-white bg-primary-600 dark:bg-primary-700 rounded-lg dark:text-white hover:bg-primary-800 dark:hover:bg-primary-800';
 	const nonActiveClass =
-		'flex items-center p-2 text-base font-normal text-green-900 rounded-lg dark:text-white hover:bg-green-100 dark:hover:bg-green-700';
+		'flex items-center p-2 text-base font-normal rounded-lg dark:text-white hover:bg-primary-100 ';
 
 	// Filter experiences based on search term
 	const filteredExperiences = (category: string) => {
@@ -77,6 +77,10 @@
 	afterNavigate(({ from, to }) => {
 		searchTerm = to?.url.searchParams.get('search') || '';
 	});
+
+	onMount(() => {
+		itinerary.get();
+	});
 </script>
 
 <Seo
@@ -96,13 +100,13 @@ history, culture, sustainability"
 		<!-- ITERINARY -->
 		{#if !isIterinaryOpen}
 			<Button onclick={toggleIterinary} class="space-x-5">
-				<List /> Itinerary({itinerary.data.length})
+				<List /> Itinerary({itinerary.size()})
 			</Button>
 		{/if}
 	</div>
 </div>
 
-<Navbar class="bg-background right-0 left-0 z-50 flex w-full items-center justify-between py-3">
+<Navbar class=" right-0 left-0 z-50 flex w-full items-center justify-between py-3">
 	<div class="flex items-center">
 		<SidebarButton onclick={sidebar.toggle} class="mb-2" />
 
@@ -166,7 +170,7 @@ history, culture, sustainability"
 					<h2 class="mb-4 text-xl font-semibold text-neutral-800 sm:text-2xl">
 						Featured experiences
 					</h2>
-					<p class="mb-4 text-sm text-neutral-600 sm:text-base">
+					<p class="mb-4 text-sm text-neutral-600">
 						Discover sustainable alternatives to make your journey more mindful, meaningful, and
 						impactful — and embark on a travel experience that inspires a better future.
 					</p>
@@ -180,14 +184,14 @@ history, culture, sustainability"
 
 			<!-- When no experiences are found -->
 			{#if experiences.length === 0}
-				<p class="text-sm text-neutral-600 sm:text-base">No experiences & places found.</p>
+				<p class="text-sm text-neutral-600">No experiences & places found.</p>
 			{/if}
 
 			{#if filteredExperiences('Food & Drinks').length > 0}
 				<!-- Food & Drinks Section -->
 				<section class="mb-8">
 					<h2 class="mb-4 text-xl font-semibold text-neutral-800 sm:text-2xl">Food & Drinks</h2>
-					<p class="mb-4 text-sm text-neutral-600 sm:text-base">
+					<p class="mb-4 text-sm text-neutral-600">
 						Discover upcoming cultural and artistic events across South Africa, from dance shows and
 						festivals to local markets. Find your next experience here!
 					</p>
@@ -203,7 +207,7 @@ history, culture, sustainability"
 				<!-- History & Culture Section -->
 				<section class="mb-8">
 					<h2 class="mb-4 text-xl font-semibold text-neutral-800 sm:text-2xl">History & Culture</h2>
-					<p class="mb-4 text-sm text-neutral-600 sm:text-base">
+					<p class="mb-4 text-sm text-neutral-600">
 						Discover upcoming cultural and artistic events across South Africa, from dance shows and
 						festivals to local markets. Find your next experience here!
 					</p>
@@ -217,25 +221,43 @@ history, culture, sustainability"
 
 			<!-- Itinerary Modal -->
 			<Modal title="Your itinerary" form bind:open={isIterinaryOpen}>
-				{#if itinerary.data.length === 0}
-					<p class="text-sm text-neutral-600 sm:text-base">No items in your itinerary yet.</p>
+				{#if itinerary.size() === 0}
+					<p class="text-sm text-neutral-600">No items in your itinerary yet.</p>
 				{:else}
+					<p>Total Days: {itinerary.totalDays()}</p>
 					<div class="space-y-2">
-						{#each itinerary.data as item, index}
+						{#each itinerary.get() as item, index}
 							<div
 								class="flex items-center justify-between rounded-lg border border-neutral-200 bg-white p-3 sm:p-4"
 							>
-								<p class="text-sm text-neutral-600 sm:text-base">{item.title} in {item.province}</p>
-								<Button color="red" class="p-2" onclick={() => removeFromItinerary(index)}>
+								<span class="flex items-center gap-5">
+									<p class="text-lg font-semibold">{index + 1}</p>
+									<div>
+										<p class="text-sm text-neutral-600">
+											{item.title} in {item.province}
+										</p>
+										<div class="text-xs text-neutral-600">
+											{moment(item.date).format('LL')}
+										</div>
+									</div>
+								</span>
+								<Button color="red" class="p-2" onclick={() => itinerary.remove(index)}>
 									<Trash2 size={18} />
 								</Button>
 							</div>
 						{/each}
 					</div>
 				{/if}
+				{#if itinerary.size() > 0}
+					<h3 class="mt-4 text-lg font-bold text-secondary-600">
+						Total: R {itinerary.totalAmount()}
+					</h3>
+				{/if}
 				{#snippet footer()}
 					<div class="grid w-full grid-cols-2 gap-2">
-						<Button type="submit" href="/booking" class="w-full">Book Now</Button>
+						<Button type="submit" href="/booking" disabled={itinerary.size() === 0} class="w-full"
+							>Book Now</Button
+						>
 						<Button type="submit" class="w-full" value="decline" color="alternative">Close</Button>
 					</div>
 				{/snippet}
