@@ -24,16 +24,14 @@ export const dashboardUsers: User[] = [
     type: 'business',
     page: BusinessDashboard,
     sidebarItems: [
-      { name: 'Dashboard', href: '/dashboard' },
-      { name: 'Listings', href: '/dashboard/listings' },
-      { name: 'Analytics', href: '/dashboard/analytics' }
+      { name: 'Dashboard', href: '/dashboard/business' },
     ],
   },
   {
     type: 'tour-guide',
     page: TourGuideDashboard,
     sidebarItems: [
-      { name: 'Dashboard', href: '/dashboard' },
+      { name: 'Dashboard', href: '/dashboard/youth' },
       { name: 'Users', href: '/dashboard/tours' },
       { name: 'Reports', href: '/dashboard/reports' }
     ],
@@ -42,7 +40,7 @@ export const dashboardUsers: User[] = [
     type: 'data-collector',
     page: DataCollectorDashboard,
     sidebarItems: [
-      { name: 'Dashboard', href: '/dashboard' },
+      { name: 'Dashboard', href: '/dashboard/youth' },
       { name: 'Users', href: '/dashboard/tasks' },
       { name: 'Reports', href: '/dashboard/reports' }
     ],

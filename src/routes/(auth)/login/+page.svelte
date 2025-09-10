@@ -6,7 +6,7 @@
 
 	const onsubmit = (e: any) => {
 		e.preventDefault();
-		console.log('Form submitted');
+
 		goto('/dashboard');
 	};
 </script>

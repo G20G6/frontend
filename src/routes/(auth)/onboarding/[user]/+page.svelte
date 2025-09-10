@@ -4,16 +4,18 @@
 	import { Button, Input, Label, Select } from 'flowbite-svelte';
 	import { scale } from 'svelte/transition';
 	import { getOnboardingUser } from '../controller.svelte';
+	import { dashboardState } from '../../../dashboard/data/controller.svelte';
 
 	const user_type = page.params.user || '';
+	let career = $state(null);
 
 	//the validation is handled in the server, so no need for extra checks here
 
-	const nextPage = '/' + user_type;
-
 	const onsubmit = (e: any) => {
 		e.preventDefault();
-		goto('/dashboard');
+		dashboardState.user_type = career || user_type;
+		console.log('User after onboarding:', dashboardState.user_type);
+		goto('/dashboard?next=' + dashboardState.user_type || 'tourist');
 	};
 
 	let user = $state(getOnboardingUser(user_type));
@@ -24,7 +26,7 @@
 	 */
 
 	afterNavigate(({ from, to }) => {
-		const career = to?.url.searchParams.get('career');
+		career = to?.url.searchParams.get('career');
 		if (career) {
 			user.inputs = user.inputs.map((input) => {
 				if (input.name === 'Program') {

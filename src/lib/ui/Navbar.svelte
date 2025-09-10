@@ -9,7 +9,6 @@
 		{ name: 'About Us', href: '/about' },
 		{ name: 'Discover', href: '/discover' },
 		{ name: 'Careers', href: '/careers' },
-		{ name: 'Business Center', href: '/business' },
 		{ name: 'Contact Us', href: '/contact' }
 	];
 	let isDashboard = $state(false);
