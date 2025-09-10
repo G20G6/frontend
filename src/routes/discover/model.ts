@@ -1,103 +1,128 @@
 export const experiences = [
-		{
-			id: 1,
-			title: 'Eco-Friendly Tours in Western Cape',
-			category: 'Sustainability',
-			province: 'Western Cape',
-			date: '2025-06-01',
-			price: 250
-		},
-		{
-			id: 2,
-			title: 'Green Accommodations in Eastern Cape',
-			category: 'Sustainability',
-			province: 'Eastern Cape',
-			date: '2025-07-15',
-			price: 300
-		},
-		{ 
-			id: 3,
-			title: 'Community Projects in Limpopo', 
-			category: 'Sustainability', 
-			province: 'Limpopo',
-			date: '2025-08-01',
-			price: 200 
-		},
-		{ 
-			id: 4,
-			title: 'Langa Cultural Festival', 
-			category: 'Food & Drinks', 
-			province: 'Western Cape',
-			date: '2025-06-15',
-			price: 150	 
-		},
-		{ 
-			id: 5,
-			title: 'Khayelitsha Dance Show', 
-			category: 'Food & Drinks', 
-			province: 'Western Cape',
-			date: '2025-07-01',
-			price: 200 
-		},
-		{ 
-			id: 6,
-			title: 'Gauteng Art Market', 
-			category: 'Food & Drinks', 
-			province: 'Gauteng',
-			date: '2025-07-15',
-			price: 250 
-		},
-		{ 
-			id: 7,
-			title: 'Langa Cultural Festival', 
-			category: 'History & Culture', 
-			province: 'Western Cape',
-			date: '2025-08-01',
-			price: 550 
-		},
-		{ 
-			id: 8,
-			title: 'Khayelitsha Dance Show', 
-			category: 'History & Culture', 
-			province: 'Western Cape',
-			date: '2025-08-15',
-			price: 800
-		 },
-		{ 
-			id: 9,
-			title: 'Gauteng Art Market', 
-			category: 'History & Culture', 
-			province: 'Gauteng',
-			date: '2025-09-01',
-			price: 2500 
-		}
-	];
-
-	// Mock itinerary for tourists (could be fetched from Supabase)
-export const mockItinerary: Array<{
-  type: 'accommodation' | 'activity';
-  name: string;
-  location?: string;
-  price: number;
-  description: string;
-}> = [
   {
-    type: 'accommodation',
-    name: 'Langa Guesthouse',
-    location: 'Cape Town, Langa',
-    price: 450,
-    description: 'Cozy guesthouse with cultural tours and local dining.'
+    id: 1,
+    title: "Eco-Friendly Tours in Western Cape",
+    category: "Sustainability",
+    province: "Western Cape",
+    location: "Cape Town – Table Mountain",
+    date: "2025-06-01",
+    time: "09:00 AM",
+    description: "A guided eco-tour exploring sustainable practices in the Cape region.",
+    theme: "Nature & Sustainability",
+    price: 250,
+    durationHours: 3,
+    provider: "Green Cape Tours"
   },
   {
-    type: 'activity',
-    name: 'Langa Cultural Tour',
+    id: 2,
+    title: "Green Accommodations in Eastern Cape",
+    category: "Sustainability",
+    province: "Eastern Cape",
+    location: "Addo National Park",
+    date: "2025-07-15",
+    time: "02:00 PM",
+    description: "Stay at eco-lodges in the Eastern Cape with solar power and water-saving systems.",
+    theme: "Eco-Living",
+    price: 300,
+    durationHours: 24,
+    provider: "Eastern Eco Stays"
+  },
+  {
+    id: 3,
+    title: "Community Projects in Limpopo",
+    category: "Sustainability",
+    province: "Limpopo",
+    location: "Polokwane Rural Villages",
+    date: "2025-08-01",
+    time: "10:00 AM",
+    description: "Participate in local community farming and cultural exchange projects.",
+    theme: "Community & Rural Life",
     price: 200,
-    description: 'Guided tour exploring Langa’s history and heritage.'
+    durationHours: 5,
+    provider: "Limpopo Community Trust"
   },
   {
-    type: 'activity',
-    name: 'Umqombothi Cooking Class',
+    id: 4,
+    title: "Langa Cultural Festival",
+    category: "Food & Drinks",
+    province: "Western Cape",
+    location: "Langa Township, Cape Town",
+    date: "2025-06-15",
+    time: "12:00 PM",
+    description: "Experience traditional food, music, and local performances at Langa’s biggest cultural event.",
+    theme: "Food & Culture",
     price: 150,
-    description: 'Learn to make traditional sorghum beer with locals.'
+    durationHours: 6,
+    provider: "Langa Arts Council"
+  },
+  {
+    id: 5,
+    title: "Khayelitsha Dance Show",
+    category: "Food & Drinks",
+    province: "Western Cape",
+    location: "Khayelitsha, Cape Town",
+    date: "2025-07-01",
+    time: "07:00 PM",
+    description: "A vibrant evening of township dance, live music, and local cuisine.",
+    theme: "Township Nightlife",
+    price: 200,
+    durationHours: 3,
+    provider: "Khayelitsha Dance Collective"
+  },
+  {
+    id: 6,
+    title: "Gauteng Art Market",
+    category: "Food & Drinks",
+    province: "Gauteng",
+    location: "Johannesburg CBD",
+    date: "2025-07-15",
+    time: "11:00 AM",
+    description: "A bustling art and food market showcasing Gauteng’s emerging creatives.",
+    theme: "Art & Cuisine",
+    price: 250,
+    durationHours: 4,
+    provider: "Jozi Creatives"
+  },
+  {
+    id: 7,
+    title: "Langa Cultural Festival",
+    category: "History & Culture",
+    province: "Western Cape",
+    location: "Langa Township, Cape Town",
+    date: "2025-08-01",
+    time: "01:00 PM",
+    description: "Celebrate Langa’s deep cultural roots with heritage tours and live shows.",
+    theme: "Heritage & Tradition",
+    price: 550,
+    durationHours: 7,
+    provider: "Langa Heritage Association"
+  },
+  {
+    id: 8,
+    title: "Khayelitsha Dance Show",
+    category: "History & Culture",
+    province: "Western Cape",
+    location: "Khayelitsha, Cape Town",
+    date: "2025-08-15",
+    time: "06:00 PM",
+    description: "Traditional and contemporary dance fused to tell Khayelitsha’s cultural story.",
+    theme: "Dance & Heritage",
+    price: 800,
+    durationHours: 3,
+    provider: "Khayelitsha Cultural Collective"
+  },
+  {
+    id: 9,
+    title: "Gauteng Art Market",
+    category: "History & Culture",
+    province: "Gauteng",
+    location: "Johannesburg CBD",
+    date: "2025-09-01",
+    time: "10:00 AM",
+    description: "Explore Johannesburg’s art history through a vibrant market with live workshops.",
+    theme: "Art & History",
+    price: 2500,
+    durationHours: 5,
+    provider: "Jozi History Makers"
   }
 ];

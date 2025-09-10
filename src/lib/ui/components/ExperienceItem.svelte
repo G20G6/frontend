@@ -7,20 +7,24 @@
 	let { experience } = $props();
 </script>
 
-<div class="h-[400px] border border-neutral-200 bg-white p-3">
+<div class="h-[430px] rounded-lg border border-neutral-200 bg-white p-3 shadow-sm">
 	<img
 		src="https://placehold.co/600x400@3x.png"
 		alt={experience.title}
-		class="mb-2 h-32 w-full object-cover sm:h-40"
+		class="mb-3 h-32 w-full rounded-md object-cover sm:h-40"
 	/>
 
 	<div class="flex h-2/5 flex-col justify-between">
-		<p class=" text-sm text-neutral-600 sm:text-base">{experience.title}</p>
-		<p class=" text-xs text-neutral-600 sm:text-base">{moment(experience.date).format('LL')}</p>
-		<h3 class="text-lg font-semibold">R {experience.price}</h3>
+		<p class="text-sm font-medium text-neutral-800 sm:text-base">{experience.title}</p>
+		<p class="text-xs text-neutral-600 sm:text-sm">{experience.theme}</p>
+		<p class="text-xs text-neutral-500 sm:text-sm">
+			{moment(experience.date).format('LL')} · {experience.time}
+		</p>
+		<p class="line-clamp-2 text-xs text-neutral-600 sm:text-sm">{experience.description}</p>
+		<h3 class="mt-1 text-lg font-semibold text-primary-600">R {experience.price}</h3>
 	</div>
 
-	<div class="flex w-full items-center">
+	<div class="mt-3 flex w-full items-center">
 		<Button onclick={() => itinerary.add(experience)} class="text-sm sm:text-base">
 			Add to Itinerary
 		</Button>

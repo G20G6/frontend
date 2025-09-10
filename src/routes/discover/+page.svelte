@@ -227,40 +227,57 @@ history, culture, sustainability"
 					<p class="text-sm text-neutral-600">No items in your itinerary yet.</p>
 				{:else}
 					<p>Total Days: {itinerary.totalDays()}</p>
-					<div class="space-y-2">
+					<div class="space-y-4">
 						{#each itinerary.get() as item, index}
-							<div
-								class="flex items-center justify-between rounded-lg border border-neutral-200 bg-white p-3 sm:p-4"
-							>
-								<span class="flex items-center gap-5">
-									<p class="text-lg font-semibold">{index + 1}</p>
-									<div>
-										<p class="text-sm text-neutral-600">
-											{item.title} in {item.province}
-										</p>
-										<div class="text-xs text-neutral-600">
-											{moment(item.date).format('LL')}
+							<div class="space-y-2 rounded-lg border border-neutral-200 bg-white p-3 sm:p-4">
+								<!-- Day + Theme -->
+								<div class="flex items-center justify-between">
+									<span class="flex items-center gap-4">
+										<p class="text-lg font-semibold">Day {index + 1}</p>
+										<p class="text-sm text-neutral-600">{item.theme}</p>
+									</span>
+									<Button color="red" class="p-2" onclick={() => itinerary.remove(index)}>
+										<Trash2 size={18} />
+									</Button>
+								</div>
+
+								<!-- Province + Date -->
+								<div class="text-xs text-neutral-500">
+									{item.province} — {moment(item.date).format('LL')}
+								</div>
+
+								<!-- Activities -->
+								<div class="space-y-1">
+									{#each item.activities as act}
+										<div class="border-l-4 border-secondary-500 py-1 pl-3">
+											<p class="text-sm font-semibold">{act.time} — {act.activity}</p>
+											<p class="text-xs text-neutral-600">{act.description}</p>
+											<p class="text-xs text-neutral-500">Est. Cost: R {act.estimatedCost}</p>
 										</div>
-									</div>
-								</span>
-								<Button color="red" class="p-2" onclick={() => itinerary.remove(index)}>
-									<Trash2 size={18} />
-								</Button>
+									{/each}
+								</div>
+
+								<!-- Price -->
+								<h3 class="text-md mt-2 font-bold text-secondary-600">
+									Experience Price: R {item.price}
+								</h3>
 							</div>
 						{/each}
 					</div>
 				{/if}
+
 				{#if itinerary.size() > 0}
 					<h3 class="mt-4 text-lg font-bold text-secondary-600">
 						Total: R {itinerary.totalAmount()}
 					</h3>
 				{/if}
+
 				{#snippet footer()}
 					<Button onclick={() => generateItineraryPDF(itinerary)}>Print</Button>
 					<div class="grid w-full grid-cols-2 gap-2">
-						<Button type="submit" href="/booking" disabled={itinerary.size() === 0} class="w-full"
-							>Book Now</Button
-						>
+						<Button type="submit" href="/booking" disabled={itinerary.size() === 0} class="w-full">
+							Book Now
+						</Button>
 						<Button type="submit" class="w-full" value="decline" color="alternative">Close</Button>
 					</div>
 				{/snippet}

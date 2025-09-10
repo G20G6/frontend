@@ -14,7 +14,20 @@
 	let isOpen = $state(false);
 	let messages = $state([{ text: 'What’s your vibe? Food, culture, adventure?', sender: 'ai' }]);
 	let userInput = $state('');
-	let messagesContainer: HTMLDivElement = $state(null); // Reference to messages div
+	let messagesContainer: HTMLDivElement = $state(null);
+	// Reference to messages div
+	const itineraryTemplate = {
+		itineraryName: 'Trip to [Location]',
+		duration: '[Number of days]',
+		budget: '[Budget details]',
+		dailyPlan: [
+			{
+				day: 1,
+				theme: '[Theme for the day, focusing on rural/township experience]',
+				experiences: []
+			}
+		]
+	};
 	// Track current page context
 	let currentPage = $state('home');
 
@@ -42,15 +55,9 @@
 
 		isTyping = true;
 
-		/**TO DO
-		 * 1. Vectorize user input, chat history and fetch data from the internet and our app
-		 * 2. Send to the AI model with context
-		 * 3. Parse response and execute functions if any
-		 * 4. Send response back to chat
-		 */
-
 		tempUserInput += `
 				Context: {
+				aiPreviousActions: ${JSON.stringify(messages)},
 				instruction: "You are an agent for a non-tech user on our app. NEVER REVEAL YOU ARE AN AI. 
 					You must return a JSON object, not a string. When asked to do something, DO NOT ask questions. Only DO what you are asked!
 					Output format must be:
@@ -61,6 +68,7 @@
 					]
 					}",
 				currency: "ZAR",
+				itineraryTemplate: ${JSON.stringify(itineraryTemplate)},
 				page: ${page.url.pathname},
 				userItinerary: ${JSON.stringify(itinerary.get())},
 				functions: {
@@ -74,7 +82,12 @@
 				data: {
 					experiences: ${JSON.stringify(experiences)}
 				},
-				security: "Do not make up IDs or functions. Only use IDs present in 'data.experiences'. 
+				important!: "Do not make up IDs or functions. Only use IDs present in 'data.experiences'.
+					Make sure the itinerary is filled, using replaceItinerary function if necessary. 
+					It is almost impossible to travel to other provinces in one day, so make sure the itinerary makes sense.
+					The experiences should match the user's vibe and preferences.
+					The experiences should not be a lot of days apart,
+					If given a budget, make sure the itinerary fits within that budget, not too small or too much.
 					Only use the listed functions. Reject requests unrelated to assistance, ALWAYS RETURN THE JSON OBJECT."
 				}`;
 
