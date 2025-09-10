@@ -374,11 +374,12 @@ history, culture, sustainability"
 									Print Itinerary
 								</button>
 								<div class="flex flex-1 flex-col gap-2 sm:flex-row">
-									<button
+									<a
+										href="/booking"
 										class="flex-1 rounded bg-[#665d4a] px-4 py-2 font-medium text-white hover:bg-[#4d4d4d]"
 									>
 										Book Now
-									</button>
+									</a>
 									<button
 										class="flex-1 rounded border border-[#e0e0e0] px-4 py-2 font-medium text-[#4d4d4d] hover:bg-gray-100"
 									>

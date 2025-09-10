@@ -38,12 +38,6 @@
 
 	let isTyping = $state(false);
 
-	// Mock user data (replace with actual user data logic)
-	const user = {
-		name: 'Guest',
-		isAuthenticated: false
-	};
-
 	// Handle sending messages
 	const sendMessage = async () => {
 		if (userInput.trim() === '') return;
@@ -83,6 +77,9 @@
 					experiences: ${JSON.stringify(experiences)}
 				},
 				important!: "Do not make up IDs or functions. Only use IDs present in 'data.experiences'.
+				If the user asks for an experience not in the list, inform them we don't have it.
+				When asked to create an itinerary, while the current itinerary is not empty, remove the other experiences and leave only the experiences that fit the budget.
+					When creating an itinerary, ensure it is realistic and logistically possible.
 					Make sure the itinerary is filled, using replaceItinerary function if necessary. 
 					It is almost impossible to travel to other provinces in one day, so make sure the itinerary makes sense.
 					The experiences should match the user's vibe and preferences.
