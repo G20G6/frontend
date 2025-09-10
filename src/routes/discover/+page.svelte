@@ -368,6 +368,7 @@ history, culture, sustainability"
 						<div class="border-t border-[#e0e0e0] bg-[#f5f5f5] p-4">
 							<div class="flex flex-col gap-3 sm:flex-row">
 								<button
+									onclick={() => generateItineraryPDF(itinerary)}
 									class="flex flex-1 items-center justify-center rounded bg-[#ff9933] px-4 py-2 font-medium text-white hover:bg-[#99450f]"
 								>
 									Print Itinerary
