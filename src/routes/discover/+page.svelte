@@ -223,64 +223,171 @@ history, culture, sustainability"
 
 			<!-- Itinerary Modal -->
 			<Modal title="Your itinerary" form bind:open={itinerary.isOpen}>
-				{#if itinerary.size() === 0}
-					<p class="text-sm text-neutral-600">No items in your itinerary yet.</p>
-				{:else}
-					<p>Total Days: {itinerary.totalDays()}</p>
-					<div class="space-y-4">
-						{#each itinerary.get() as item, index}
-							<div class="space-y-2 rounded-lg border border-neutral-200 bg-white p-3 sm:p-4">
-								<!-- Day + Theme -->
-								<div class="flex items-center justify-between">
-									<span class="flex items-center gap-4">
-										<p class="text-lg font-semibold">Day {index + 1}</p>
-										<p class="text-sm text-neutral-600">{item.theme}</p>
-									</span>
-									<Button color="red" class="p-2" onclick={() => itinerary.remove(index)}>
-										<Trash2 size={18} />
-									</Button>
+				<!-- Itinerary Modal -->
+				<div class="bg-opacity-50 fixed inset-0 z-50 flex items-center justify-center bg-black p-4">
+					<div
+						class="flex max-h-[90vh] w-full max-w-2xl flex-col overflow-hidden rounded-lg bg-white shadow-xl"
+					>
+						<!-- Header -->
+						<div class="relative bg-[#99450f] p-4 text-white">
+							<h2 class="text-xl font-bold">Your Itinerary</h2>
+							<div class="absolute top-0 right-0 flex h-full items-center pr-4">
+								<button class="text-white hover:text-gray-200">
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										class="h-6 w-6"
+										fill="none"
+										viewBox="0 0 24 24"
+										stroke="currentColor"
+									>
+										<path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											stroke-width="2"
+											d="M6 18L18 6M6 6l12 12"
+										/>
+									</svg>
+								</button>
+							</div>
+						</div>
+
+						<!-- Content -->
+						<div class="flex-1 overflow-y-auto p-4">
+							{#if itinerary.size() === 0}
+								<div class="rounded-lg bg-[#f5f5f5] p-6 text-center">
+									<p class="text-sm text-[#4d4d4d]">No items in your itinerary yet.</p>
+								</div>
+							{:else}
+								<div class="mb-4 flex items-center justify-between">
+									<p class="font-semibold text-[#4d4d4d]">Total Days: {itinerary.totalDays()}</p>
 								</div>
 
-								<!-- Province + Date -->
-								<div class="text-xs text-neutral-500">
-									{item.province} — {moment(item.date).format('LL')}
-								</div>
+								<div class="space-y-4">
+									{#each itinerary.get() as item, index}
+										<div class="overflow-hidden rounded-lg border border-[#e0e0e0] bg-[#f5f5f5]">
+											<!-- Day Header -->
+											<div class="flex items-center justify-between bg-[#ff9933] p-3 text-white">
+												<div class="flex items-center">
+													<span class="mr-3 text-lg font-bold">Day {index + 1}</span>
+													<span class="text-sm">{item.theme}</span>
+												</div>
+												<button class="text-white hover:text-[#99450f]">
+													<svg
+														xmlns="http://www.w3.org/2000/svg"
+														class="h-5 w-5"
+														fill="none"
+														viewBox="0 0 24 24"
+														stroke="currentColor"
+													>
+														<path
+															stroke-linecap="round"
+															stroke-linejoin="round"
+															stroke-width="2"
+															d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+														/>
+													</svg>
+												</button>
+											</div>
 
-								<!-- Activities -->
-								<div class="space-y-1">
-									{#each item.activities as act}
-										<div class="border-l-4 border-secondary-500 py-1 pl-3">
-											<p class="text-sm font-semibold">{act.time} — {act.activity}</p>
-											<p class="text-xs text-neutral-600">{act.description}</p>
-											<p class="text-xs text-neutral-500">Est. Cost: R {act.estimatedCost}</p>
+											<!-- Content -->
+											<div class="p-4">
+												<!-- Location and Date -->
+												<div class="mb-3 text-xs text-[#4d4d4d]">
+													{item.province} — {moment(item.date).format('LL')}
+												</div>
+
+												<!-- Event Details -->
+												<div class="mb-4 grid grid-cols-1 gap-3 text-xs md:grid-cols-2">
+													<div>
+														<p class="font-semibold text-[#665d4a]">Date & Time</p>
+														<p class="text-[#4d4d4d]">
+															{moment(item.date).format('MMMM D, YYYY')} at {item.time || 'TBD'}
+														</p>
+													</div>
+													<div>
+														<p class="font-semibold text-[#665d4a]">Location</p>
+														<p class="text-[#4d4d4d]">
+															{item.location || 'TBD'}, {item.province || 'South Africa'}
+														</p>
+													</div>
+													<div>
+														<p class="font-semibold text-[#665d4a]">Provider</p>
+														<p class="text-[#4d4d4d]">{item.provider || 'Local Guide'}</p>
+													</div>
+													<div>
+														<p class="font-semibold text-[#665d4a]">Duration</p>
+														<p class="text-[#4d4d4d]">{item.durationHours || 'Full'} hours</p>
+													</div>
+												</div>
+
+												<!-- Activities -->
+												{#if item.activities && item.activities.length > 0}
+													<div class="mb-4">
+														<p class="mb-2 text-sm font-semibold text-[#99450f]">Schedule:</p>
+														<div class="space-y-2">
+															{#each item.activities as act}
+																<div class="border-l-2 border-[#665d4a] py-1 pl-2">
+																	<p class="text-sm font-semibold">{act.time} — {act.activity}</p>
+																	{#if act.description}
+																		<p class="text-xs text-[#4d4d4d]">{act.description}</p>
+																	{/if}
+																	{#if act.estimatedCost}
+																		<p class="text-xs text-[#4d4d4d]">
+																			Est. Cost: R {act.estimatedCost}
+																		</p>
+																	{/if}
+																</div>
+															{/each}
+														</div>
+													</div>
+												{/if}
+
+												<!-- Price -->
+												<div
+													class="flex items-center justify-between border-t border-[#e0e0e0] pt-3"
+												>
+													<p class="font-bold text-[#99450f]">Experience Price:</p>
+													<p class="font-bold text-[#99450f]">R {item.price}</p>
+												</div>
+											</div>
 										</div>
 									{/each}
 								</div>
 
-								<!-- Price -->
-								<h3 class="text-md mt-2 font-bold text-secondary-600">
-									Experience Price: R {item.price}
-								</h3>
+								<!-- Total -->
+								<div class="mt-6 border-t border-[#ff9933] pt-4">
+									<div class="flex items-center justify-between">
+										<p class="text-lg font-bold text-[#99450f]">Total:</p>
+										<p class="text-lg font-bold text-[#99450f]">R {itinerary.totalAmount()}</p>
+									</div>
+								</div>
+							{/if}
+						</div>
+
+						<!-- Footer -->
+						<div class="border-t border-[#e0e0e0] bg-[#f5f5f5] p-4">
+							<div class="flex flex-col gap-3 sm:flex-row">
+								<button
+									class="flex flex-1 items-center justify-center rounded bg-[#ff9933] px-4 py-2 font-medium text-white hover:bg-[#99450f]"
+								>
+									Print Itinerary
+								</button>
+								<div class="flex flex-1 flex-col gap-2 sm:flex-row">
+									<button
+										class="flex-1 rounded bg-[#665d4a] px-4 py-2 font-medium text-white hover:bg-[#4d4d4d]"
+									>
+										Book Now
+									</button>
+									<button
+										class="flex-1 rounded border border-[#e0e0e0] px-4 py-2 font-medium text-[#4d4d4d] hover:bg-gray-100"
+									>
+										Close
+									</button>
+								</div>
 							</div>
-						{/each}
+						</div>
 					</div>
-				{/if}
-
-				{#if itinerary.size() > 0}
-					<h3 class="mt-4 text-lg font-bold text-secondary-600">
-						Total: R {itinerary.totalAmount()}
-					</h3>
-				{/if}
-
-				{#snippet footer()}
-					<Button onclick={() => generateItineraryPDF(itinerary)}>Print</Button>
-					<div class="grid w-full grid-cols-2 gap-2">
-						<Button type="submit" href="/booking" disabled={itinerary.size() === 0} class="w-full">
-							Book Now
-						</Button>
-						<Button type="submit" class="w-full" value="decline" color="alternative">Close</Button>
-					</div>
-				{/snippet}
+				</div>
 			</Modal>
 		</main>
 	</div>

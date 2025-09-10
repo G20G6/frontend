@@ -15,7 +15,9 @@
 	/>
 
 	<div class="flex h-2/5 flex-col justify-between">
-		<p class="text-sm font-medium text-neutral-800 sm:text-base">{experience.title}</p>
+		<p class="text-sm font-medium text-neutral-800 sm:text-base">
+			{experience.title} in {experience.province}
+		</p>
 		<p class="text-xs text-neutral-600 sm:text-sm">{experience.theme}</p>
 		<p class="text-xs text-neutral-500 sm:text-sm">
 			{moment(experience.date).format('LL')} · {experience.time}
