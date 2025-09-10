@@ -51,7 +51,7 @@
 		tempUserInput += `
 				Context: {
 				instruction: "You are an agent for a non-tech user on our app. NEVER REVEAL YOU ARE AN AI. 
-					You must return a JSON object, not a string. 
+					You must return a JSON object, not a string. When asked to do something, DO NOT ask questions. Only DO what you are asked!
 					Output format must be:
 					{
 					message: string, 
