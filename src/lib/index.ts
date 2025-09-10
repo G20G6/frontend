@@ -263,18 +263,18 @@ function generateItineraryPDF(itinerary) {
     setColor(colors.darkGray);
     
     // Left column info
-    doc.text(`📅 ${moment(item.date).format('MMMM D, YYYY')} at ${item.time || 'TBD'}`, 
+    doc.text(`${moment(item.date).format('MMMM D, YYYY')} at ${item.time || 'TBD'}`, 
              margin + cardPadding, cardY);
     
     cardY += 12;
-    doc.text(`📍 ${item.location || 'TBD'}, ${item.province || 'South Africa'}`, 
+    doc.text(`${item.location || 'TBD'}, ${item.province || 'South Africa'}`, 
              margin + cardPadding, cardY);
     
     // Right column info
     const rightColX = pageWidth - margin - 150;
-    doc.text(`👥 ${item.provider || 'Local Guide'}`, rightColX, currentY + 38);
-    doc.text(`⏱️ ${item.durationHours || 'Full'} hours`, rightColX, currentY + 50);
-    doc.text(`💰 R ${item.price || 'TBD'}`, rightColX, currentY + 62);
+    doc.text(`${item.provider || 'Local Guide'}`, rightColX, currentY + 38);
+    doc.text(`${item.durationHours || 'Full'} hours`, rightColX, currentY + 50);
+    doc.text(`R ${item.price || 'TBD'}`, rightColX, currentY + 62);
     
     currentY += 100;
 
@@ -379,7 +379,7 @@ function generateItineraryPDF(itinerary) {
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(8);
   setColor(colors.darkGray);
-  doc.text('📱 Share: kasikhaya.com/share | 📧 Support: support@kasikhaya.com', margin, currentY);
+  doc.text('Share: kasikhaya.com/share | Support: support@kasikhaya.com', margin, currentY);
 
   // Save the PDF with error handling
   try {
