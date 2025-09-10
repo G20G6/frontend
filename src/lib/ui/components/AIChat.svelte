@@ -8,10 +8,11 @@
 	import { MessageDotsOutline } from 'flowbite-svelte-icons';
 	import { experiences } from '../../../routes/discover/model';
 	import { goto } from '$app/navigation';
+	import { generateItineraryPDF } from '$lib';
 
 	// State management
 	let isOpen = $state(false);
-	let messages = $state([{ text: 'Hi there, how can I help you today?', sender: 'ai' }]);
+	let messages = $state([{ text: 'What’s your vibe? Food, culture, adventure?', sender: 'ai' }]);
 	let userInput = $state('');
 	let messagesContainer: HTMLDivElement = $state(null); // Reference to messages div
 	// Track current page context
@@ -64,6 +65,7 @@
 				userItinerary: ${JSON.stringify(itinerary.get())},
 				functions: {
 					addToItinerary(id): "Add an experience to the itinerary by ID",
+					generateItineraryPDF(): "Generate or Print a PDF of the current itinerary.",
 					removeFromItinerary(id): "Remove an experience from the itinerary by id",
 					clearItinerary(): "Clear the entire itinerary",
 					search(term): "Search by term, if user wants to view more experiences, 
@@ -129,6 +131,7 @@
 					return;
 				}
 				itinerary.add(exp);
+				itinerary.openModal();
 			},
 			removeFromItinerary: (id) => {
 				const index = experiences.findIndex((exp) => exp.id === Number(id));
@@ -140,6 +143,9 @@
 			},
 			search: (term) => {
 				goto(`/discover?search=${term.toLowerCase().replace(' ', '-')}`);
+			},
+			generateItineraryPDF: () => {
+				generateItineraryPDF(itinerary);
 			}
 		};
 

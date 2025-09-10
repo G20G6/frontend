@@ -12,6 +12,7 @@
 	import { scale } from 'svelte/transition';
 	import moment from 'moment';
 	import { onMount } from 'svelte';
+	import { generateItineraryPDF } from '$lib';
 
 	// Static provinces (South African context)
 	const provinces = [
@@ -71,10 +72,8 @@
 		}
 	};
 
-	let isIterinaryOpen = $state(false);
-
 	const toggleIterinary = () => {
-		isIterinaryOpen = !isIterinaryOpen;
+		itinerary.isOpen = !itinerary.isOpen;
 	};
 
 	afterNavigate(({ from, to }) => {
@@ -101,7 +100,7 @@ history, culture, sustainability"
 	>
 		<AiChat />
 		<!-- ITERINARY -->
-		{#if !isIterinaryOpen}
+		{#if !itinerary.isOpen}
 			<Button onclick={toggleIterinary} class="space-x-5">
 				<List /> Itinerary({itinerary.size()})
 			</Button>
@@ -223,7 +222,7 @@ history, culture, sustainability"
 			{/if}
 
 			<!-- Itinerary Modal -->
-			<Modal title="Your itinerary" form bind:open={isIterinaryOpen}>
+			<Modal title="Your itinerary" form bind:open={itinerary.isOpen}>
 				{#if itinerary.size() === 0}
 					<p class="text-sm text-neutral-600">No items in your itinerary yet.</p>
 				{:else}
@@ -257,6 +256,7 @@ history, culture, sustainability"
 					</h3>
 				{/if}
 				{#snippet footer()}
+					<Button onclick={() => generateItineraryPDF(itinerary)}>Print</Button>
 					<div class="grid w-full grid-cols-2 gap-2">
 						<Button type="submit" href="/booking" disabled={itinerary.size() === 0} class="w-full"
 							>Book Now</Button

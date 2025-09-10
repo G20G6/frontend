@@ -53,6 +53,9 @@ export let itinerary = $state({
 		const endDate = moment(this.data[this.size() - 1].date);
 		const days = moment.duration(endDate.diff(startDate)).asDays() + 1;
 		return days;
-	}
-	
+	},
+	openModal: function() {
+		itinerary.isOpen = true;
+	},
+	isOpen: false,
 });
