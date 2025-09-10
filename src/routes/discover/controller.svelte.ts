@@ -13,6 +13,10 @@ const addToItinerary = (experience: any) => {
 
 const removeFromItinerary = (index: number) => {
 		itinerary.data = itinerary.data.filter((_, i) => i !== index);
+		if(itinerary.size() === 0) {
+			localStorage.removeItem('itinerary');
+			return;
+		}
 		localStorage.setItem('itinerary', JSON.stringify(itinerary.get()));
 
 	};
@@ -38,6 +42,9 @@ export let itinerary = $state({
 			return dateA - dateB;
 		});
 	},
+	clear: function() {
+		this.data = [];
+	},
 	totalAmount: function() {
 		return this.data.reduce((total, experience) => total + experience.price, 0);
 	},
@@ -47,4 +54,5 @@ export let itinerary = $state({
 		const days = moment.duration(endDate.diff(startDate)).asDays() + 1;
 		return days;
 	}
+	
 });

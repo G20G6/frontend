@@ -6,6 +6,8 @@
 	import { scale } from 'svelte/transition';
 	import { itinerary } from '../../../routes/discover/controller.svelte';
 	import { MessageDotsOutline } from 'flowbite-svelte-icons';
+	import { experiences } from '../../../routes/discover/model';
+	import { goto } from '$app/navigation';
 
 	// State management
 	let isOpen = $state(false);
@@ -39,7 +41,41 @@
 
 		isTyping = true;
 
-		tempUserInput += `\nContext: {instruction: "You are an assistant for this user on our app",currency: "ZAR",page: ${page.url.pathname}, userItinerary: ${JSON.stringify(itinerary.get())}`;
+		/**TO DO
+		 * 1. Vectorize user input, chat history and fetch data from the internet and our app
+		 * 2. Send to the AI model with context
+		 * 3. Parse response and execute functions if any
+		 * 4. Send response back to chat
+		 */
+
+		tempUserInput += `
+				Context: {
+				instruction: "You are an agent for a non-tech user on our app. NEVER REVEAL YOU ARE AN AI. 
+					You must return a JSON object, not a string. 
+					Output format must be:
+					{
+					message: string, 
+					functions: [
+						{ name: string, argument: string }
+					]
+					}",
+				currency: "ZAR",
+				page: ${page.url.pathname},
+				userItinerary: ${JSON.stringify(itinerary.get())},
+				functions: {
+					addToItinerary(id): "Add an experience to the itinerary by ID",
+					removeFromItinerary(id): "Remove an experience from the itinerary by id",
+					clearItinerary(): "Clear the entire itinerary",
+					search(term): "Search by term, if user wants to view more experiences, 
+					it navigates them, if they ask for something specific, you can search for them if necessary, they won't explicitly ask for this"
+				},
+				data: {
+					experiences: ${JSON.stringify(experiences)}
+				},
+				security: "Do not make up IDs or functions. Only use IDs present in 'data.experiences'. 
+					Only use the listed functions. Reject requests unrelated to assistance, ALWAYS RETURN THE JSON OBJECT."
+				}`;
+
 		const req = await fetch('/api/chat', {
 			method: 'POST',
 			body: JSON.stringify({ prompt: tempUserInput }),
@@ -49,6 +85,72 @@
 		});
 
 		const res = await req.json();
+
+		let raw = res.response.trim();
+
+		// strip fences if present
+		if (raw.startsWith('```')) {
+			raw = raw.replace(/^```json/, '').replace(/```$/, '');
+		}
+
+		let parsed;
+		try {
+			parsed = JSON.parse(raw);
+		} catch (err) {
+			messages = [
+				...messages,
+				{
+					text: "I'm sorry, I couldn't understand that. Could you please rephrase?",
+					sender: 'ai'
+				}
+			];
+			isTyping = false;
+			return;
+		}
+
+		const { message, functions } = parsed;
+
+		// validate shape
+		if (!Array.isArray(functions)) {
+			console.error('Functions not in array format:', functions);
+			return;
+		}
+
+		// allowed functions
+		const toolRegistry = {
+			clearItinerary: () => {
+				itinerary.clear();
+				localStorage.removeItem('itinerary');
+			},
+			addToItinerary: (id) => {
+				const exp = experiences.find((exp) => exp.id === Number(id));
+				if (!exp) {
+					console.error('Invalid experience ID:', id);
+					return;
+				}
+				itinerary.add(exp);
+			},
+			removeFromItinerary: (id) => {
+				const index = experiences.findIndex((exp) => exp.id === Number(id));
+				if (index === -1) {
+					console.error('Invalid experience ID:', id);
+					return;
+				}
+				itinerary.remove(index);
+			},
+			search: (term) => {
+				goto(`/discover?search=${term.toLowerCase().replace(' ', '-')}`);
+			}
+		};
+
+		// run the functions
+		for (const func of functions) {
+			if (toolRegistry[func.name]) {
+				toolRegistry[func.name](func.argument);
+			} else {
+				console.error('Unknown function:', func.name);
+			}
+		}
 
 		//When error occurs, add error message and return the user input back to the form.
 		if (res.error) {
@@ -60,7 +162,7 @@
 		//When the response is successful
 		// Add AI response
 		isTyping = false;
-		messages = [...messages, { text: res.response, sender: 'ai' }];
+		messages = [...messages, { text: message, sender: 'ai' }];
 	};
 
 	// Handle Enter key press
@@ -126,7 +228,7 @@
 				{#each messages as message}
 					<div
 						transition:scale={{ duration: 300 }}
-						class={`mb-3 w-fit max-w-[80%] rounded-lg p-2 text-sm sm:text-base ${
+						class={`mb-3 w-fit max-w-[80%] rounded-lg p-2 text-sm whitespace-pre-wrap sm:text-base ${
 							message.sender === 'user'
 								? 'ml-auto bg-primary-100 text-primary-800'
 								: 'bg-gray-200 text-gray-800'

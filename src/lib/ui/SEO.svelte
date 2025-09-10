@@ -1,7 +1,4 @@
 <script>
-	import { page } from '$app/state';
-	import { derived } from 'svelte/store';
-
 	let {
 		title,
 		keywords = 'kasi khaya, tourism, discover places, experiences',

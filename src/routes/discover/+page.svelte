@@ -51,9 +51,12 @@
 			(exp) =>
 				exp.category === category &&
 				(searchTerm === '' ||
-					exp.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-					exp.province.toLowerCase().includes(searchTerm.toLowerCase()) ||
-					exp.province.toLowerCase().replace(' ', '-').includes(searchTerm.toLowerCase()))
+					exp.title.toLowerCase().includes(searchTerm.toLowerCase().replace(' ', '-')) ||
+					exp.province.toLowerCase().includes(searchTerm.toLowerCase().replace(' ', '-')) ||
+					exp.province
+						.toLowerCase()
+						.replace(' ', '-')
+						.includes(searchTerm.toLowerCase().replace(' ', '-')))
 		);
 	};
 	// Add item from form

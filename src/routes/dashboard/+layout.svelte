@@ -73,7 +73,7 @@
 			{/each}
 		</SidebarGroup>
 	</Sidebar>
-	<div class="h-96 overflow-auto px-4 md:ml-64">
+	<div class="h-[90svh] overflow-auto px-4 md:ml-64">
 		<!-- DASHBOARD CONTENT/PAGES -->
 		<div class="flex">
 			{@render children?.()}
