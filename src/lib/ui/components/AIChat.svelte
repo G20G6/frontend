@@ -66,6 +66,7 @@
 				page: ${page.url.pathname},
 				userItinerary: ${JSON.stringify(itinerary.get())},
 				functions: {
+					goToBooking(): "Navigate to the booking page",
 					addToItinerary(id): "Add an experience to the itinerary by ID",
 					generateItineraryPDF(): "Generate or Print a PDF of the current itinerary.",
 					removeFromItinerary(id): "Remove an experience from the itinerary by id",
@@ -130,6 +131,9 @@
 
 		// allowed functions
 		const toolRegistry = {
+			goToBooking: () => {
+				goto('/booking');
+			},
 			clearItinerary: () => {
 				itinerary.clear();
 				localStorage.removeItem('itinerary');
