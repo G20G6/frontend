@@ -9,7 +9,7 @@
 
 <div class="h-[430px] rounded-lg border border-neutral-200 bg-white p-3 shadow-sm">
 	<img
-		src="https://placehold.co/600x400@3x.png"
+		src={experience.image}
 		alt={experience.title}
 		class="mb-3 h-32 w-full rounded-md object-cover sm:h-40"
 	/>

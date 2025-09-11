@@ -155,7 +155,7 @@
 				}
 				itinerary.remove(index);
 			},
-			search: (term) => {
+			search: (term: string) => {
 				goto(`/discover?search=${term.toLowerCase().replace(' ', '-')}`);
 			},
 			generateItineraryPDF: () => {
