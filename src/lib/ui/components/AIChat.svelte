@@ -77,7 +77,8 @@
 				data: {
 					experiences: ${JSON.stringify(experiences)}
 				},
-				important!: "Do not make up IDs or functions. Only use IDs present in 'data.experiences'.
+				important!: "When they say a number of days, it is consecutive days, don't make a gap in the days
+				.Do not make up IDs or functions. Only use IDs present in 'data.experiences'.
 				If the user asks for an experience not in the list, inform them we don't have it.
 				When asked to create an itinerary, while the current itinerary is not empty, remove the other experiences and leave only the experiences that fit the budget.
 					When creating an itinerary, ensure it is realistic and logistically possible.

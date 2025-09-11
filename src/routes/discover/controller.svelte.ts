@@ -58,4 +58,7 @@ export let itinerary = $state({
 		itinerary.isOpen = true;
 	},
 	isOpen: false,
+	includes: function(experienceId: number) {
+		return this.data.some((item: any) => item.id === experienceId);
+	}
 });

@@ -177,8 +177,8 @@ history, culture, sustainability"
 						impactful — and embark on a travel experience that inspires a better future.
 					</p>
 					<div class="grid grid-cols-1 gap-2 sm:gap-4 md:grid-cols-3">
-						{#each filteredExperiences('Sustainability') as exp}
-							<ExperienceItem experience={exp} />
+						{#each filteredExperiences('Sustainability') as exp, index}
+							<ExperienceItem experience={exp} {index} />
 						{/each}
 					</div>
 				</section>
@@ -198,8 +198,8 @@ history, culture, sustainability"
 						festivals to local markets. Find your next experience here!
 					</p>
 					<div class="grid grid-cols-1 gap-2 sm:gap-4 md:grid-cols-3">
-						{#each filteredExperiences('Food & Drinks') as exp}
-							<ExperienceItem experience={exp} />
+						{#each filteredExperiences('Food & Drinks') as exp, index}
+							<ExperienceItem experience={exp} {index} />
 						{/each}
 					</div>
 				</section>
@@ -214,8 +214,8 @@ history, culture, sustainability"
 						festivals to local markets. Find your next experience here!
 					</p>
 					<div class="grid grid-cols-1 gap-2 sm:gap-4 md:grid-cols-3">
-						{#each filteredExperiences('History & Culture') as exp}
-							<ExperienceItem experience={exp} />
+						{#each filteredExperiences('History & Culture') as exp, index}
+							<ExperienceItem experience={exp} {index} />
 						{/each}
 					</div>
 				</section>
@@ -228,9 +228,9 @@ history, culture, sustainability"
 					festivals to local markets. Find your next experience here!
 				</p>
 				<div class="grid grid-cols-1 gap-2 sm:gap-4 md:grid-cols-3">
-					{#each experiences as exp}
+					{#each experiences as exp, index}
 						{#if exp.category !== 'Food & Drinks' && exp.category !== 'History & Culture' && exp.category !== 'Sustainability'}
-							<ExperienceItem experience={exp} />
+							<ExperienceItem experience={exp} {index} />
 						{/if}
 					{/each}
 				</div>

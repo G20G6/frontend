@@ -1,13 +1,13 @@
 export const experiences = [
     {
         id: 1,
-        title: "Eco-Friendly Tours",
+        title: "Township Tours",
         category: "Sustainability",
         province: "Western Cape",
-        location: "Cape Town – Table Mountain",
+        location: "Cape Town",
         date: "2025-06-01",
         time: "09:00 AM",
-        description: "A guided eco-tour exploring sustainable practices in the Cape region.",
+        description: "A guided township tour exploring sustainable practices in the Cape region.",
         theme: "Nature & Sustainability",
         price: 250,
         durationHours: 3,

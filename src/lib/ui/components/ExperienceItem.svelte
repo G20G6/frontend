@@ -4,7 +4,7 @@
 	import { Heart } from '@lucide/svelte';
 	import moment from 'moment';
 
-	let { experience } = $props();
+	let { experience, index } = $props();
 </script>
 
 <div class="h-[430px] rounded-lg border border-neutral-200 bg-white p-3 shadow-sm">
@@ -27,9 +27,15 @@
 	</div>
 
 	<div class="mt-3 flex w-full items-center">
-		<Button onclick={() => itinerary.add(experience)} class="text-sm sm:text-base">
-			Add to Itinerary
-		</Button>
+		{#if itinerary.includes(experience.id)}
+			<Button color="red" onclick={() => itinerary.remove(index)} class="text-sm sm:text-base">
+				Remove from Itinerary
+			</Button>
+		{:else}
+			<Button onclick={() => itinerary.add(experience)} class="text-sm sm:text-base">
+				Add to Itinerary
+			</Button>
+		{/if}
 		<Button color="alternative" class="ml-2 text-sm sm:text-base">
 			<Heart />
 		</Button>
