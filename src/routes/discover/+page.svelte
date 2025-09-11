@@ -220,6 +220,21 @@ history, culture, sustainability"
 					</div>
 				</section>
 			{/if}
+			<!-- Other -->
+			<section class="mb-8">
+				<h2 class="mb-4 text-xl font-semibold text-neutral-800 sm:text-2xl">Other</h2>
+				<p class="mb-4 text-sm text-neutral-600">
+					Discover upcoming cultural and artistic events across South Africa, from dance shows and
+					festivals to local markets. Find your next experience here!
+				</p>
+				<div class="grid grid-cols-1 gap-2 sm:gap-4 md:grid-cols-3">
+					{#each experiences as exp}
+						{#if exp.category !== 'Food & Drinks' && exp.category !== 'History & Culture' && exp.category !== 'Sustainability'}
+							<ExperienceItem experience={exp} />
+						{/if}
+					{/each}
+				</div>
+			</section>
 
 			<!-- Itinerary Modal -->
 			<Modal title="Your itinerary" form bind:open={itinerary.isOpen}>

@@ -12,7 +12,7 @@ export const experiences = [
         price: 250,
         durationHours: 3,
         provider: "Green Cape Tours",
-        image: "/images/exp/western_cape.jpg"
+        image: "/images/exp/Eco-Friendly Tours in Western Cape.jpeg"
     },
     {
         id: 2,
@@ -27,7 +27,7 @@ export const experiences = [
         price: 300,
         durationHours: 24,
         provider: "Eastern Eco Stays",
-        image: "/images/exp/farming.jpeg"
+        image: "/images/exp/green accomodations at eastern cape.jpeg"
     },
     {
         id: 3,
@@ -117,7 +117,7 @@ export const experiences = [
         price: 800,
         durationHours: 3,
         provider: "Khayelitsha Cultural Collective",
-        image: "/images/exp/Apartheid Museum in Gauteng.jpeg"
+        image: "/images/exp/Khayelitsha Dance Show in Western Cape.jpeg"
     },
     {
         id: 9,
@@ -132,7 +132,7 @@ export const experiences = [
         price: 2500,
         durationHours: 5,
         provider: "Jozi History Makers",
-        image: "/images/exp/Cape Malay Cooking Experience in Western Cape.jpeg"
+        image: "/images/exp/Gauteng Art Market.jpeg"
     },
     {
         id: 10,
@@ -147,7 +147,7 @@ export const experiences = [
         price: 350,
         durationHours: 4,
         provider: "Soweto Adventures",
-        image: "/images/exp/soweto.jpg"
+        image: "/images/exp/Soweto Bicycle Tour.jpeg"
     },
     {
         id: 11,
@@ -162,7 +162,7 @@ export const experiences = [
         price: 600,
         durationHours: 8,
         provider: "Mountain Quest Tours",
-        image: "/images/exp/Zulu Cultural Village in KwaZulu-Natal.jpeg"
+        image: "/images/exp/Drakensberg Hiking Expedition.jpeg"
     },
     {
         id: 12,
@@ -177,7 +177,7 @@ export const experiences = [
         price: 280,
         durationHours: 3,
         provider: "Cango Adventures",
-        image: "/images/exp/farming.jpg"
+        image: "/images/exp/Cango Caves Exploration.jpeg"
     },
     {
         id: 13,
@@ -192,7 +192,7 @@ export const experiences = [
         price: 450,
         durationHours: 5,
         provider: "Wild Coast Trails",
-        image: "/images/exp/flower.jpeg"
+        image: "/images/exp/Wild Coast Horse Riding.jpeg"
     },
     {
         id: 14,
@@ -207,7 +207,7 @@ export const experiences = [
         price: 750,
         durationHours: 6,
         provider: "Kruger Safaris",
-        image: "/images/exp/gauteng.jpg"
+        image: "/images/exp/Kruger National Park Safari.jpeg"
     },
     {
         id: 15,
@@ -222,7 +222,7 @@ export const experiences = [
         price: 120,
         durationHours: 2,
         provider: "Coastal Wildlife Tours",
-        image: "/images/exp/ocean.jpg"
+        image: "/images/exp/Penguin Colony Tour.jpeg"
     },
     {
         id: 16,
@@ -237,22 +237,7 @@ export const experiences = [
         price: 420,
         durationHours: 5,
         provider: "Addo Elephant Tours",
-        image: "/images/exp/gauteng_dance.jpg"
-    },
-    {
-        id: 17,
-        title: "Whale Watching Tour",
-        category: "Wildlife",
-        province: "Western Cape",
-        location: "Hermanus",
-        date: "2025-09-30",
-        time: "10:00 AM",
-        description: "Boat-based whale watching tour to see Southern Right whales during calving season.",
-        theme: "Marine Mammals",
-        price: 550,
-        durationHours: 4,
-        provider: "Hermanus Whale Watchers",
-        image: "/images/exp/indigenous.jpg"
+        image: "/images/exp/Addo Elephant Experience.jpeg"
     },
     {
         id: 18,
@@ -297,7 +282,7 @@ export const experiences = [
         price: 350,
         durationHours: 3,
         provider: "Bo-Kaap Kitchen",
-        image: "/images/exp/ocean.jpeg"
+        image: "/images/exp/Cape Malay Cooking Experience in Western Cape.jpeg"
     },
     {
         id: 21,
@@ -312,7 +297,7 @@ export const experiences = [
         price: 320,
         durationHours: 6,
         provider: "Zulu Experience",
-        image: "/images/exp/Robben Island Tour in Western Cape.jpeg"
+        image: "/images/exp/Zulu Cultural Village in KwaZulu-Natal.jpeg"
     },
     {
         id: 22,
@@ -327,7 +312,7 @@ export const experiences = [
         price: 400,
         durationHours: 5,
         provider: "Robben Island Museum",
-        image: "/images/exp/San Rock Art Tour in Western Cape.jpeg"
+        image: "/images/exp/Robben Island Tour in Western Cape.jpeg"
     },
     {
         id: 23,
@@ -342,7 +327,7 @@ export const experiences = [
         price: 120,
         durationHours: 3,
         provider: "Apartheid Museum Guides",
-        image: "/images/exp/solar.jpeg"
+        image: "/images/exp/Apartheid Museum in Gauteng.jpeg"
     },
     {
         id: 24,
@@ -357,7 +342,7 @@ export const experiences = [
         price: 280,
         durationHours: 4,
         provider: "Cederberg Heritage Tours",
-        image: "/images/exp/solar.jpg"
+        image: "/images/exp/San Rock Art Tour in Western Cape.jpeg"
     },
     {
         id: 25,
@@ -372,7 +357,7 @@ export const experiences = [
         price: 220,
         durationHours: 5,
         provider: "Green Valley Farm",
-        image: "/images/exp/Apartheid Museum in Gauteng.jpeg"
+        image: "/images/exp/farming.jpg"
     },
     {
         id: 26,
@@ -387,7 +372,7 @@ export const experiences = [
         price: 100,
         durationHours: 3,
         provider: "Ocean Guardians",
-        image: "/images/exp/Apartheid Museum in Gauteng.jpeg"
+        image: "/images/exp/ocean.jpg"
     },
     {
         id: 27,
@@ -402,7 +387,7 @@ export const experiences = [
         price: 180,
         durationHours: 4,
         provider: "Solar Solutions SA",
-        image: "/images/exp/Apartheid Museum in Gauteng.jpeg"
+        image: "/images/exp/solar.jpg"
     },
     {
         id: 28,
@@ -417,7 +402,7 @@ export const experiences = [
         price: 150,
         durationHours: 2,
         provider: "Kirstenbosch Guides",
-        image: "/images/exp/Apartheid Museum in Gauteng.jpeg"
+        image: "/images/exp/flower.jpeg"
     },
     {
         id: 29,
@@ -432,7 +417,7 @@ export const experiences = [
         price: 200,
         durationHours: 3,
         provider: "Gugulethu Art Collective",
-        image: "/images/exp/Apartheid Museum in Gauteng.jpeg"
+        image: "/images/exp/Township Art Tour.jpeg"
     },
     {
         id: 30,
@@ -447,7 +432,7 @@ export const experiences = [
         price: 180,
         durationHours: 2,
         provider: "Alexandra Drum Circle",
-        image: "/images/exp/Apartheid Museum in Gauteng.jpeg"
+        image: "/images/exp/Drumming Workshop.jpeg"
     },
     {
         id: 31,
@@ -462,7 +447,7 @@ export const experiences = [
         price: 220,
         durationHours: 3,
         provider: "Zulu Beadwork Co-op",
-        image: "/images/exp/Apartheid Museum in Gauteng.jpeg"
+        image: "/images/exp/Beadwork Craft Class.jpeg"
     },
     {
         id: 32,
@@ -477,37 +462,7 @@ export const experiences = [
         price: 250,
         durationHours: 4,
         provider: "Soweto Jazz Club",
-        image: "/images/exp/Apartheid Museum in Gauteng.jpeg"
-    },
-    {
-        id: 33,
-        title: "Hot Air Balloon Safari",
-        category: "Adventure",
-        province: "Limpopo",
-        location: "Waterberg Biosphere",
-        date: "2025-06-25",
-        time: "05:00 AM",
-        description: "Spectacular hot air balloon ride over the Waterberg landscape at sunrise.",
-        theme: "Aerial Adventure",
-        price: 1200,
-        durationHours: 4,
-        provider: "Waterberg Balloon Safaris",
-        image: "/images/exp/Apartheid Museum in Gauteng.jpeg"
-    },
-    {
-        id: 34,
-        title: "Shark Cage Diving",
-        category: "Adventure",
-        province: "Western Cape",
-        location: "Gansbaai",
-        date: "2025-07-30",
-        time: "07:00 AM",
-        description: "Face-to-face encounter with great white sharks in their natural habitat.",
-        theme: "Marine Adventure",
-        price: 1500,
-        durationHours: 5,
-        provider: "Shark Encounter",
-        image: "/images/exp/Apartheid Museum in Gauteng.jpeg"
+        image: "/images/exp/Jazz Night in Soweto.jpeg"
     },
     {
         id: 35,
@@ -522,6 +477,6 @@ export const experiences = [
         price: 380,
         durationHours: 3,
         provider: "Valley Zip Adventures",
-        image: "/images/exp/Apartheid Museum in Gauteng.jpeg"
+        image: "/images/exp/Zip-lining Tour.jpeg"
     }
 ];
